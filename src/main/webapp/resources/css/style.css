@@ -12,6 +12,7 @@
   --txt-size: 16px;
 }
 
+
 /* Сброс и задание стилей */
 * {
   box-sizing: border-box;
@@ -54,6 +55,7 @@ h3 {
   margin-bottom: 8px;
 }
 
+
 /* Сброс стилей для элементов форм */
 button,
 input {
@@ -73,4 +75,13 @@ input {
 
 button {
   cursor: pointer;
+}
+
+
+/* Сброс стилей для списков */
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
