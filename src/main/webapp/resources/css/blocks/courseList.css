@@ -1,0 +1,17 @@
+/*=============================
+  СТИЛИ ДЛЯ СПИСКА УРОКОВ КУРСА
+=============================*/
+.course__lessons {
+  width: 100%;
+  max-width: 600px;
+}
+
+.lesson {
+  border: 1px solid var(--bg-secondary);
+  padding: 12px 15px;
+  margin-top: 10px;
+}
+
+.lesson__link:hover {
+  text-decoration: underline;
+}

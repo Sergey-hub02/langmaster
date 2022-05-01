@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Курс</title>
+
+  <link rel="stylesheet" href="../../../resources/css/style.css">
+  <link rel="stylesheet" href="../../../resources/css/blocks/container.css">
+
+  <link rel="stylesheet" href="../../../resources/css/blocks/header.css">
+  <link rel="stylesheet" href="../../../resources/css/blocks/logo.css">
+
+  <link rel="stylesheet" href="../../../resources/css/blocks/section.css">
+  <link rel="stylesheet" href="../../../resources/css/blocks/courseList.css">
+  <link rel="stylesheet" href="../../../resources/css/blocks/assignForm.css">
+
+  <link rel="stylesheet" href="../../../resources/css/blocks/footer.css">
+</head>
+
+
+<body>
+
+<!--========== ШАПКА САЙТА ==========-->
+<header class="header">
+  <div class="container">
+    <div class="header__inner">
+      <div class="logo">
+        <a href="/langmaster" class="logo__link">LangMaster</a>
+      </div>
+
+      <nav class="nav" id="nav">
+        <a href="/langmaster/profile" class="nav__link">Профиль</a>
+        <a href="/langmaster/register" class="nav__link">Регистрация</a>
+        <a href="/langmaster/login" class="nav__link">Войти</a>
+
+        <form class="logout" action="/langmaster">
+          <button class="nav__link" type="submit">Выйти</button>
+        </form>
+      </nav>
+
+      <button class="burger" id="burger" type="button">Burger</button>
+    </div> <!-- ./header__inner -->
+  </div> <!-- ./container -->
+</header>
+
+
+<!--========== СЕКЦИЯ С ОПИСАНИЕМ КУРСА ==========-->
+<section class="section">
+  <div class="container">
+    <header class="section__header">
+      <h2 class="section__title">Название курса</h2>
+      <img src="../../../resources/images/courses/english.jpg" alt="English" class="section__image">
+    </header>
+
+    <div class="section__content">
+      <div class="course__description">
+        <strong>Описание курса: </strong>
+        <span>Оставлю здесь хоть какой-нибудь бессмысленный текст, чтобы заполнить пространство страницы.</span>
+      </div>
+
+      <h3>Уроки курса</h3>
+      <div class="course__lessons">
+        <ul class="lessons_list">
+
+          <a class="lesson__link" href="/langmaster/course/lesson/{id}">
+            <li class="lesson">Урок №1. Название урока</li>
+          </a>
+
+          <a class="lesson__link" href="/langmaster/course/lesson/{id}">
+            <li class="lesson">Урок №2. Название урока</li>
+          </a>
+
+          <a class="lesson__link" href="/langmaster/course/lesson/{id}">
+            <li class="lesson">Урок №3. Название урока</li>
+          </a>
+
+          <a class="lesson__link" href="/langmaster/course/lesson/{id}">
+            <li class="lesson">Урок №4. Название урока</li>
+          </a>
+
+          <a class="lesson__link" href="/langmaster/course/lesson/{id}">
+            <li class="lesson">Урок №5. Название урока</li>
+          </a>
+
+          <a class="lesson__link" href="/langmaster/course/lesson/{id}">
+            <li class="lesson">Урок №6. Название урока</li>
+          </a>
+
+          <a class="lesson__link" href="/langmaster/course/lesson/{id}">
+            <li class="lesson">Урок №7. Название урока</li>
+          </a>
+
+        </ul>
+      </div> <!-- ./course__lessons -->
+
+      <form action="/langmaster/course/{id}/assign" method="POST" class="assign">
+        <button class="assign__button">Пройти курс</button>
+      </form>
+    </div> <!-- ./section__content -->
+  </div> <!-- ./container -->
+</section>
+
+
+<!--========== ПОДВАЛ САЙТА ==========-->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="logo">
+        <a href="/langmaster" class="logo__link">LangMaster</a>
+      </div>
+
+      <span class="footer__text" id="footer-text"></span>
+    </div> <!-- ./footer__inner -->
+  </div> <!-- ./container -->
+</footer>
+
+
+<!--========== JAVASCRIPT ==========-->
+<!-- TODO: вынести этот код в отдельный файл -->
+<script>
+  /*========== БУРГЕР-МЕНЮ ==========*/
+  document
+    .querySelector("#burger")
+    .addEventListener("click", () => {
+      document.querySelector("#nav").classList.toggle("active");
+    });
+
+
+  /*========== ГЕНЕРАЦИЯ ТЕКСТА В ПОДВАЛЕ САЙТА ===========*/
+  document
+    .querySelector("#footer-text").innerHTML = `&copy; Все права защищены ${new Date().getFullYear()}`;
+</script>
+
+</body>
+
+</html>

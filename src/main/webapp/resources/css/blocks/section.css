@@ -5,3 +5,8 @@
   padding-top: 65px;
   padding-bottom: 30px;
 }
+
+.section__image {
+  width: 100%;
+  max-width: 550px;
+}

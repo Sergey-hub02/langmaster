@@ -1,0 +1,20 @@
+/*==============================
+  СТИЛИ ДЛЯ ФОРМЫ ЗАПИСИ НА КУРС
+==============================*/
+.assign {
+  margin-top: 15px;
+}
+
+.assign__button {
+  padding: 14px 20px;
+  box-shadow: 0px 0px 10px 0px var(--bg-secondary);
+
+  color: var(--bg-primary);
+  background-color: var(--bg-secondary);
+
+  transition: background-color .2s linear;
+}
+
+.assign__button:hover {
+  background-color: #695d7a;
+}
