@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Авторизация</title>
+
+  <link rel="stylesheet" href="../../../resources/css/style.css">
+  <link rel="stylesheet" href="../../../resources/css/blocks/container.css">
+  <link rel="stylesheet" href="../../../resources/css/blocks/form.css">
+</head>
+
+
+<body>
+
+<!--========== ФОРМА АВТОРИЗАЦИИ ПОЛЬЗОВАТЕЛЯ ==========-->
+<div class="form__container">
+  <h1 class="form__title">Авторизация</h1>
+
+  <form action="/langmaster/login" method="POST" class="form">
+    <div class="form__element">
+      <input type="email" class="input" placeholder="Адрес электронной почты">
+    </div>
+
+    <div class="form__element">
+      <input type="password" class="input" placeholder="Пароль">
+    </div>
+
+    <div class="form__element centered">
+      <button class="button" type="submit">Войти</button>
+    </div>
+  </form>
+</div>
+
+</body>
+
+</html>
