@@ -1,0 +1,75 @@
+/*==========
+  ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ СТРАНИЦ
+==========*/
+
+/* CSS-переменные */
+:root {
+  --bg-primary: #e8e6ea;
+  --bg-secondary: #443459;
+
+  --txt-color: #15012f;
+  --txt-size: 16px;
+}
+
+/* Сброс и задание стилей */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  font-size: var(--txt-size);
+  font-family: "Arial", sans-serif;
+  font-weight: 400;
+
+  color: var(--txt-color);
+  background-color: var(--bg-primary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3,
+p {
+  margin-top: 8px;
+}
+
+h1 {
+  font-size: calc(var(--txt-size) + 12px);
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: calc(var(--txt-size) + 8px);
+  margin-bottom: 12px;
+}
+
+h3 {
+  font-size: calc(var(--txt-size) + 4px);
+  margin-bottom: 8px;
+}
+
+/* Сброс стилей для элементов форм */
+button,
+input {
+  margin: 0;
+  padding: 0;
+
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: 400;
+
+  color: inherit;
+  background: none;
+
+  border: 0;
+  outline: 0;
+}
+
+button {
+  cursor: pointer;
+}
