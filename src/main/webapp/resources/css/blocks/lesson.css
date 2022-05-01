@@ -1,0 +1,22 @@
+/*==========================
+  СТИЛИ ДЛЯ ОФОРМЛЕНИЯ УРОКА
+==========================*/
+.lesson {
+  padding-top: 35px;
+  padding-left: 300px;
+}
+
+
+/* Медиа-запрос */
+@media (max-width: 800px) {
+  .lesson {
+    padding-left: 200px;
+  }
+}
+
+@media (max-width: 550px) {
+  .lesson {
+    padding-top: 20px;
+    padding-left: 0;
+  }
+}
