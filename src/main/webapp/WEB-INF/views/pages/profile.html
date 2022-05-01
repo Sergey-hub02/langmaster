@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Профиль</title>
+
+  <link rel="stylesheet" href="../../../resources/css/style.css">
+  <link rel="stylesheet" href="../../../resources/css/blocks/container.css">
+
+  <link rel="stylesheet" href="../../../resources/css/blocks/header.css">
+  <link rel="stylesheet" href="../../../resources/css/blocks/logo.css">
+
+  <link rel="stylesheet" href="../../../resources/css/blocks/section.css">
+  <link rel="stylesheet" href="../../../resources/css/blocks/table.css">
+  <link rel="stylesheet" href="../../../resources/css/blocks/courses.css">
+
+  <link rel="stylesheet" href="../../../resources/css/blocks/footer.css">
+</head>
+
+
+<body>
+  
+<!--========== ШАПКА САЙТА ==========-->
+<header class="header">
+  <div class="container">
+    <div class="header__inner">
+      <div class="logo">
+        <a href="/langmaster" class="logo__link">LangMaster</a>
+      </div>
+
+      <nav class="nav" id="nav">
+        <a href="/langmaster/profile" class="nav__link">Профиль</a>
+        <a href="/langmaster/register" class="nav__link">Регистрация</a>
+        <a href="/langmaster/login" class="nav__link">Войти</a>
+
+        <form class="logout" action="/langmaster">
+          <button class="nav__link" type="submit">Выйти</button>
+        </form>
+      </nav>
+
+      <button class="burger" id="burger" type="button">Burger</button>
+    </div> <!-- ./header__inner -->
+  </div> <!-- ./container -->
+</header>
+
+
+<!--========== СЕКЦИЯ С ЛИЧНОЙ ИНФОРМАЦИЕЙ ==========-->
+<section class="section">
+  <div class="container">
+    <header class="section__header">
+      <h2 class="section__title">Личные данные</h2>
+    </header>
+
+    <div class="section__content">
+      <table class="table" cellspacing="0">
+        <tbody>
+          <tr class="table__row">
+            <td class="table__cell">Имя пользователя</td>
+            <td class="table__cell">&nbsp;</td>
+            <td class="table__cell">&nbsp;</td>
+            <td class="table__cell">test2202</td>
+          </tr>
+
+          <tr class="table__row">
+            <td class="table__cell">Адрес электронной почты</td>
+            <td class="table__cell">&nbsp;</td>
+            <td class="table__cell">&nbsp;</td>
+            <td class="table__cell">test@gmail.com</td>
+          </tr>
+
+          <tr class="table__row">
+            <td class="table__cell">Дата рождения</td>
+            <td class="table__cell">&nbsp;</td>
+            <td class="table__cell">&nbsp;</td>
+            <td class="table__cell">19.08.2002</td>
+          </tr>
+
+          <tr class="table__row">
+            <td class="table__cell">Количество проходимых курсов</td>
+            <td class="table__cell">&nbsp;</td>
+            <td class="table__cell">&nbsp;</td>
+            <td class="table__cell">0</td>
+          </tr>
+
+          <tr class="table__row">
+            <td class="table__cell">Дата регистрации аккаунта</td>
+            <td class="table__cell">&nbsp;</td>
+            <td class="table__cell">&nbsp;</td>
+            <td class="table__cell">01.05.2022</td>
+          </tr>
+        </tbody>
+      </table>
+    </div> <!-- ./section__content -->
+  </div> <!-- ./container -->
+</section>
+
+
+<!--========== СЕКЦИЯ "МОИ КУРСЫ" ==========-->
+<section class="section">
+  <div class="container">
+    <header class="section__header">
+      <h2 class="section__title">Мои курсы</h2>
+    </header>
+
+    <div class="section__content">
+      <div class="courses">
+
+        <div class="course">
+          <a href="/langmaster/course/{id}">
+            <div class="course__wrapper">
+              <div class="course__image">
+                <img src="../../../resources/images/courses/english.jpg" alt="English">
+              </div>
+
+              <div class="course__info">
+                <h3 class="course__title">Английский язык для чайников</h3>
+                <p class="course__description">Курс английского языка для начинающих</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="course">
+          <a href="/langmaster/course/{id}">
+            <div class="course__wrapper">
+              <div class="course__image">
+                <img src="../../../resources/images/courses/english.jpg" alt="English">
+              </div>
+
+              <div class="course__info">
+                <h3 class="course__title">Английский язык для чайников</h3>
+                <p class="course__description">Курс английского языка для начинающих</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="course">
+          <a href="/langmaster/course/{id}">
+            <div class="course__wrapper">
+              <div class="course__image">
+                <img src="../../../resources/images/courses/english.jpg" alt="English">
+              </div>
+
+              <div class="course__info">
+                <h3 class="course__title">Английский язык для чайников</h3>
+                <p class="course__description">Курс английского языка для начинающих</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="course">
+          <a href="/langmaster/course/{id}">
+            <div class="course__wrapper">
+              <div class="course__image">
+                <img src="../../../resources/images/courses/english.jpg" alt="English">
+              </div>
+
+              <div class="course__info">
+                <h3 class="course__title">Английский язык для чайников</h3>
+                <p class="course__description">Курс английского языка для начинающих</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="course">
+          <a href="/langmaster/course/{id}">
+            <div class="course__wrapper">
+              <div class="course__image">
+                <img src="../../../resources/images/courses/english.jpg" alt="English">
+              </div>
+
+              <div class="course__info">
+                <h3 class="course__title">Английский язык для чайников</h3>
+                <p class="course__description">Курс английского языка для начинающих</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+      </div> <!-- ./courses -->
+    </div> <!-- ./section__content -->
+  </div> <!-- ./container -->
+</section>
+
+
+<!--========== ПОДВАЛ САЙТА ==========-->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="logo">
+        <a href="/langmaster" class="logo__link">LangMaster</a>
+      </div>
+
+      <span class="footer__text" id="footer-text"></span>
+    </div> <!-- ./footer__inner -->
+  </div> <!-- ./container -->
+</footer>
+
+
+<!--========== JAVASCRIPT ==========-->
+<script>
+  /*========== БУРГЕР-МЕНЮ ==========*/
+  document
+    .querySelector("#burger")
+    .addEventListener("click", () => {
+      document.querySelector("#nav").classList.toggle("active");
+    });
+
+
+  /*========== ГЕНЕРАЦИЯ ТЕКСТА В ПОДВАЛЕ САЙТА ===========*/
+  document
+    .querySelector("#footer-text").innerHTML = `&copy; Все права защищены ${new Date().getFullYear()}`;
+</script>
+
+</body>
+
+</html>
