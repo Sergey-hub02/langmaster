@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Регистрация</title>
+
+  <link rel="stylesheet" href="../../../resources/css/style.css">
+  <link rel="stylesheet" href="../../../resources/css/blocks/container.css">
+  <link rel="stylesheet" href="../../../resources/css/blocks/form.css">
+</head>
+
+
+<body>
+
+<!--========== ФОРМА РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ ==========-->
+<div class="form__container">
+  <h1 class="form__title">Регистрация</h1>
+
+  <form action="/langmaster/register" method="POST" class="form">
+    <div class="form__element">
+      <input type="text" class="input" placeholder="Имя пользователя">
+    </div>
+
+    <div class="form__element">
+      <input type="date" class="input" placeholder="Дата рождения">
+    </div>
+
+    <div class="form__element">
+      <input type="email" class="input" placeholder="Адрес электронной почты">
+    </div>
+
+    <div class="form__element">
+      <input type="password" class="input" placeholder="Пароль">
+    </div>
+
+    <div class="form__element">
+      <input type="password" class="input" placeholder="Подтвердите пароль">
+    </div>
+
+    <div class="form__element centered">
+      <button class="button" type="submit">Зарегистрироваться</button>
+    </div>
+  </form>
+</div>
+
+</body>
+
+</html>
