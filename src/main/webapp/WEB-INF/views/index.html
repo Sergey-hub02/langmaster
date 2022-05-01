@@ -14,6 +14,8 @@
 
   <link rel="stylesheet" href="../../resources/css/blocks/section.css">
   <link rel="stylesheet" href="../../resources/css/blocks/courses.css">
+
+  <link rel="stylesheet" href="../../resources/css/blocks/footer.css">
 </head>
 
 
@@ -133,6 +135,7 @@
   </div> <!-- ./container -->
 </section>
 
+
 <!--========== СЕКЦИЯ "ВСЕ КУРСЫ" ==========-->
 <section class="section">
   <div class="container">
@@ -224,6 +227,20 @@
 </section>
 
 
+<!--========== ПОДВАЛ САЙТА ==========-->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="logo">
+        <a href="/langmaster" class="logo__link">LangMaster</a>
+      </div>
+
+      <span class="footer__text" id="footer-text"></span>
+    </div> <!-- ./footer__inner -->
+  </div> <!-- ./container -->
+</footer>
+
+
 <!--========== JAVASCRIPT ==========-->
 <script>
   /*========== БУРГЕР-МЕНЮ ==========*/
@@ -232,6 +249,11 @@
     .addEventListener("click", () => {
       document.querySelector("#nav").classList.toggle("active");
     });
+
+
+  /*========== ГЕНЕРАЦИЯ ТЕКСТА В ПОДВАЛЕ САЙТА ===========*/
+  document
+    .querySelector("#footer-text").innerHTML = `&copy; Все права защищены ${new Date().getFullYear()}`;
 </script>
 
 </body>
