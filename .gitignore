@@ -11,5 +11,5 @@ public
 **/*.log
 
 # Игнорировать все изображения
-src/main/webapp/resources/images/*.jpg
-src/main/webapp/resources/images/*.png
+src/main/webapp/resources/images/**/*.jpg
+src/main/webapp/resources/images/**/*.png
