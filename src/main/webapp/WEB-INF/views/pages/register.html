@@ -19,25 +19,25 @@
 <div class="form__container">
   <h1 class="form__title">Регистрация</h1>
 
-  <form action="/langmaster/register" method="POST" class="form">
+  <form
+    th:action="@{/langmaster/register}"
+    th:method="POST"
+    th:object="${user}"
+    class="form">
     <div class="form__element">
-      <input type="text" class="input" placeholder="Имя пользователя">
+      <input type="text" name="name" class="input" placeholder="Имя пользователя">
     </div>
 
     <div class="form__element">
-      <input type="date" class="input" placeholder="Дата рождения">
+      <input type="date" name="birthDate" class="input" placeholder="Дата рождения">
     </div>
 
     <div class="form__element">
-      <input type="email" class="input" placeholder="Адрес электронной почты">
+      <input type="email" name="email" class="input" placeholder="Адрес электронной почты">
     </div>
 
     <div class="form__element">
-      <input type="password" class="input" placeholder="Пароль">
-    </div>
-
-    <div class="form__element">
-      <input type="password" class="input" placeholder="Подтвердите пароль">
+      <input type="password" name="password" class="input" placeholder="Пароль">
     </div>
 
     <div class="form__element centered">

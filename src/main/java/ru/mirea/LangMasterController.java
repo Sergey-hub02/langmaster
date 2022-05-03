@@ -1,12 +1,34 @@
 package ru.mirea;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.mirea.dao.UserDAO;
+import ru.mirea.models.User;
 
+import java.time.LocalDate;
+
+/**
+ * Обработчик HTTP-запросов приложения
+ */
 @Controller
 @RequestMapping("/langmaster")
 public class LangMasterController {
+  private UserDAO userDAO;
+
+  /**
+   * Внедрение зависимости DAO
+   * @param userDAO       объект, позволяющий общаться с БД
+   */
+  @Autowired
+  public LangMasterController(UserDAO userDAO) {
+    this.userDAO = userDAO;
+  }
+
   /**
    * Отображает главную страницу при GET-запросе
    * на адрес /langmaster
@@ -32,6 +54,30 @@ public class LangMasterController {
   @GetMapping("/register")
   public String displayRegisterPage() {
     return "pages/register";
+  }
+
+  /**
+   * Забирает данные из формы регистрации пользователя
+   * и добавляет запись о нём в БД
+   * @param name            имя пользователя
+   * @param birthDate       дата рождения
+   * @param email           адрес электронной почты
+   * @param password        пароль
+   */
+  @PostMapping("/register")
+  public String processRegister(@RequestParam("name") String name,
+                                @RequestParam("birthDate") String birthDate,
+                                @RequestParam("email") String email,
+                                @RequestParam("password") String password) {
+    User user = new User();
+
+    user.setName(name);
+    user.setBirthDate(LocalDate.parse(birthDate));
+    user.setEmail(email);
+    user.setPassword(password);
+
+    this.userDAO.registerUser(user);
+    return "index";
   }
 
   /**
