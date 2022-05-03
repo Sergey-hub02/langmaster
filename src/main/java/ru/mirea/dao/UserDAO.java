@@ -36,13 +36,12 @@ public class UserDAO {
    */
   public void registerUser(User user) {
     try {
-      String query = "INSERT INTO `User`(`name`, `birth_date`, `email`, `password`) VALUES(?, ?, ?, ?)";
+      String query = "INSERT INTO `User`(`name`, `email`, `password`) VALUES(?, ?, ?)";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
 
       preparedStatement.setString(1, user.getName());
-      preparedStatement.setDate(2, user.getBirthDate());
-      preparedStatement.setString(3, user.getEmail());
-      preparedStatement.setString(4, user.getPassword());
+      preparedStatement.setString(2, user.getEmail());
+      preparedStatement.setString(3, user.getPassword());
 
       preparedStatement.executeUpdate();
     }

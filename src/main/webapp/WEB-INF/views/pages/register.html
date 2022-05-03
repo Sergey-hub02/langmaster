@@ -19,30 +19,30 @@
 <div class="form__container">
   <h1 class="form__title">Регистрация</h1>
 
-  <form
-    th:action="@{/langmaster/register}"
-    th:method="POST"
-    th:object="${user}"
-    class="form">
+  <form th:action="@{/langmaster/register}"
+        th:method="POST"
+        th:object="${user}"
+        class="form">
+
     <div class="form__element">
-      <input type="text" name="name" class="input" placeholder="Имя пользователя">
+      <input type="text" th:field="*{name}" class="input" placeholder="Имя пользователя">
+      <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error">Ошибка</p>
     </div>
 
     <div class="form__element">
-      <input type="date" name="birthDate" class="input" placeholder="Дата рождения">
+      <input type="email" th:field="*{email}" class="input" placeholder="Адрес электронной почты">
+      <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error">Ошибка</p>
     </div>
 
     <div class="form__element">
-      <input type="email" name="email" class="input" placeholder="Адрес электронной почты">
-    </div>
-
-    <div class="form__element">
-      <input type="password" name="password" class="input" placeholder="Пароль">
+      <input type="password" th:field="*{password}" class="input" placeholder="Пароль">
+      <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error">Ошибка</p>
     </div>
 
     <div class="form__element centered">
       <button class="button" type="submit">Зарегистрироваться</button>
     </div>
+
   </form>
 </div>
 

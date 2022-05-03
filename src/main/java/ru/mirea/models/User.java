@@ -1,18 +1,28 @@
 package ru.mirea.models;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Класс, представляющий пользователя приложения
  */
 public class User {
   private int id;
+
+  @NotEmpty(message = "Обязательное поле!")
   private String name;
-  private LocalDate birthDate;
+
+  @NotEmpty(message = "Обязательное поле!")
+  @Email(message = "Неправильный формат электронной почты!")
   private String email;
+
+  @NotEmpty(message = "Обязательное поле!")
+  @Length(min = 4, message = "Пароль должен содержать хотя бы 4 символа!")
   private String password;
-  private LocalDate registrationDate;
+
+  private String registrationDate;
 
   /**
    * Пустой конструктор
@@ -50,21 +60,6 @@ public class User {
   }
 
   /**
-   * Возвращает дату рождения пользователя
-   */
-  public Date getBirthDate() {
-    return Date.valueOf(this.birthDate);
-  }
-
-  /**
-   * Устанавливает новое значение для даты рождения пользователя
-   * @param birthDate       новая дата рождения пользователя
-   */
-  public void setBirthDate(LocalDate birthDate) {
-    this.birthDate = birthDate;
-  }
-
-  /**
    * Возвращает адрес электронной почты пользователя
    */
   public String getEmail() {
@@ -83,7 +78,7 @@ public class User {
    * Возвращает пароль пользователя
    */
   public String getPassword() {
-    return password;
+    return this.password;
   }
 
   /**
@@ -97,15 +92,15 @@ public class User {
   /**
    * Возвращает дату регистрации аккаунта
    */
-  public LocalDate getRegistrationDate() {
-    return registrationDate;
+  public String getRegistrationDate() {
+    return this.registrationDate;
   }
 
   /**
    * Устанавливает новую дату регистрации аккаунта
    * @param registrationDate      новая дата регистрации аккаунта
    */
-  public void setRegistrationDate(LocalDate registrationDate) {
+  public void setRegistrationDate(String registrationDate) {
     this.registrationDate = registrationDate;
   }
 }
