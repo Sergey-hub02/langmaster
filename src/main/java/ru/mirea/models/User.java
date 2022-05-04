@@ -1,27 +1,13 @@
 package ru.mirea.models;
 
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-
 /**
  * Класс, представляющий пользователя приложения
  */
 public class User {
   private int id;
-
-  @NotEmpty(message = "Обязательное поле!")
   private String name;
-
-  @NotEmpty(message = "Обязательное поле!")
-  @Email(message = "Неправильный формат электронной почты!")
   private String email;
-
-  @NotEmpty(message = "Обязательное поле!")
-  @Length(min = 4, message = "Пароль должен содержать хотя бы 4 символа!")
   private String password;
-
   private String registrationDate;
 
   /**
@@ -102,5 +88,19 @@ public class User {
    */
   public void setRegistrationDate(String registrationDate) {
     this.registrationDate = registrationDate;
+  }
+
+  /**
+   * Выводит значение полей объекта
+   */
+  @Override
+  public String toString() {
+    return "User{" +
+      "id=" + id +
+      ", name='" + name + '\'' +
+      ", email='" + email + '\'' +
+      ", password='" + password + '\'' +
+      ", registrationDate='" + registrationDate + '\'' +
+      '}';
   }
 }

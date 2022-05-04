@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.mirea.dao.UserDAO;
 import ru.mirea.models.User;
 
-import javax.validation.Valid;
-
 /**
  * Обработчик HTTP-запросов приложения
  */
 @Controller
 @RequestMapping("/langmaster")
 public class LangMasterController {
+  private User user = null;
   private UserDAO userDAO;
 
   /**
@@ -63,11 +62,7 @@ public class LangMasterController {
    * и добавляет запись о нём в БД
    */
   @PostMapping("/register")
-  public String processRegister(@ModelAttribute("user") @Valid User user,
-                                BindingResult bindingResult) {
-    if (bindingResult.hasErrors())
-      return "pages/register";
-
+  public String processRegister(@ModelAttribute("user") User user) {
     this.userDAO.registerUser(user);
     return "redirect:/langmaster";
   }
@@ -77,7 +72,32 @@ public class LangMasterController {
    * GET-запросе на адрес /langmaster/login
    */
   @GetMapping("/login")
-  public String displayLoginPage() {
+  public String displayLoginPage(Model model) {
+    model.addAttribute("user", new User());
+    return "pages/login";
+  }
+
+  /**
+   * Получает данные из формы и выполняет авторизацию пользователя
+   */
+  @PostMapping("/login")
+  public String processLogin(@ModelAttribute("user") User user,
+                             BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      System.out.println("hello");
+      return "pages/login";
+    }
+
+    User dbUser = this.userDAO.getUser(user.getName());
+    System.out.println(dbUser);
+
+    if (user.getPassword().equals(dbUser.getPassword())) {
+      System.out.println("ok");
+      this.user = dbUser;
+      return "redirect:/langmaster";
+    }
+
+    System.out.println("not ok");
     return "pages/login";
   }
 

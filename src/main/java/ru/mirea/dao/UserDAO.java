@@ -3,10 +3,7 @@ package ru.mirea.dao;
 import org.springframework.stereotype.Component;
 import ru.mirea.models.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Класс для работы с БД
@@ -48,5 +45,68 @@ public class UserDAO {
     catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Находит пользователя в БД по его id
+   * @param id        идентификатор пользователя
+   */
+  public User getUser(int id) {
+    User user = null;
+
+    try {
+      String query = "SELECT * FROM `User` WHERE `user_id` = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setInt(1, id);
+      ResultSet result = preparedStatement.executeQuery();
+
+      user = new User();
+
+      user.setId(result.getInt("user_id"));
+      user.setName(result.getString("name"));
+      user.setEmail(result.getString("email"));
+      user.setPassword(result.getString("password"));
+      user.setRegistrationDate(result
+        .getDate("registration_date")
+        .toString());
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return user;
+  }
+
+  /**
+   * Находит пользователя в БД по его имени
+   * @param name        имя пользователя
+   */
+  public User getUser(String name) {
+    User user = null;
+
+    try {
+      // имя пользователя должно быть уникальным, поэтому вернётся только один ряд
+      String query = "SELECT * FROM `User` WHERE `name` = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setString(1, name);
+      ResultSet result = preparedStatement.executeQuery();
+
+      user = new User();
+
+      user.setId(result.getInt("id"));
+      user.setName(result.getString("name"));
+      user.setEmail(result.getString("email"));
+      user.setPassword(result.getString("password"));
+      user.setRegistrationDate(result
+        .getDate("registration_date")
+        .toString());
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return user;
   }
 }

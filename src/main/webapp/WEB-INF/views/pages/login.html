@@ -19,18 +19,23 @@
 <div class="form__container">
   <h1 class="form__title">Авторизация</h1>
 
-  <form action="/langmaster/login" method="POST" class="form">
+  <form th:action="@{/langmaster/login}"
+        th:method="POST"
+        th:object="${user}"
+        class="form">
+
     <div class="form__element">
-      <input type="email" class="input" placeholder="Адрес электронной почты">
+      <input type="text" th:field="*{name}" class="input" placeholder="Имя пользователя">
     </div>
 
     <div class="form__element">
-      <input type="password" class="input" placeholder="Пароль">
+      <input type="password" th:field="*{password}" class="input" placeholder="Пароль">
     </div>
 
     <div class="form__element centered">
       <button class="button" type="submit">Войти</button>
     </div>
+
   </form>
 </div>
 
