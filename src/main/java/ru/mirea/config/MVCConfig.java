@@ -70,6 +70,10 @@ public class MVCConfig implements WebMvcConfigurer {
     registry.viewResolver(resolver);
   }
 
+  /**
+   * Указывает директорию, где хранятся статические ресурсы проекта
+   * @param registry        реестр
+   */
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     registry.addResourceHandler("/resources/**")

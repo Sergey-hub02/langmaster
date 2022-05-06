@@ -19,18 +19,48 @@
 <div class="form__container">
   <h1 class="form__title">Авторизация</h1>
 
-  <form action="/langmaster/login" method="POST" class="form">
+  <form th:action="@{/langmaster/login}"
+        th:method="POST"
+        th:object="${user}"
+        class="form">
+
     <div class="form__element">
-      <input type="email" class="input" placeholder="Адрес электронной почты">
+      <input type="text"
+             th:field="*{name}"
+             class="input"
+             placeholder="Имя пользователя">
+
+      <p th:if="${#fields.hasErrors('name')}"
+         th:errors="*{name}"
+         class="error">Error</p>
     </div>
 
     <div class="form__element">
-      <input type="password" class="input" placeholder="Пароль">
+      <input type="hidden"
+             th:field="*{email}"
+             class="input"
+             placeholder="Адрес электронной почты">
+
+      <p th:if="${#fields.hasErrors('email')}"
+         th:errors="*{email}"
+         class="error">Error</p>
+    </div>
+
+    <div class="form__element">
+      <input type="password"
+             th:field="*{password}"
+             class="input"
+             placeholder="Пароль">
+
+      <p th:if="${#fields.hasErrors('password')}"
+         th:errors="*{password}"
+         class="error">Error</p>
     </div>
 
     <div class="form__element centered">
       <button class="button" type="submit">Войти</button>
     </div>
+
   </form>
 </div>
 
