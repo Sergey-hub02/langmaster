@@ -1,6 +1,8 @@
 package ru.mirea;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,9 +24,12 @@ public class LangMasterController {
   private User user = null;
   private UserDAO userDAO;
 
+  /* Объект, позволяющий хэшировать пароли */
+  private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
   /**
-   * Внедрение зависимости DAO
-   * @param userDAO       объект, позволяющий общаться с БД
+   * Внедрение зависимостей для работы с БД
+   * @param userDAO                   объект DAO для работы с БД
    */
   @Autowired
   public LangMasterController(UserDAO userDAO) {
@@ -67,6 +72,7 @@ public class LangMasterController {
   @PostMapping("/register")
   public String processRegister(@ModelAttribute("user") @Valid User user,
                                 BindingResult bindingResult) {
+    // Отображение ошибок под полями ввода
     if (bindingResult.hasErrors())
       return "pages/register";
 
@@ -74,6 +80,7 @@ public class LangMasterController {
     this.user = this.userDAO.getUser(user.getName());
 
     if (this.user != null) {
+      // Отображение ошибки уникальности имени пользователя
       bindingResult.rejectValue("name",
         "error.user",
         "Имя " + user.getName() + " уже занято!");
@@ -81,6 +88,8 @@ public class LangMasterController {
     }
 
     /* Добавление пользователя в БД и авторизация */
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+
     this.userDAO.registerUser(user);
     this.user = this.userDAO.getUser(user.getName());
 
@@ -93,6 +102,7 @@ public class LangMasterController {
    */
   @GetMapping("/login")
   public String displayLoginPage(Model model) {
+    // Здесь используется ненастоящий адрес электронной почты, чтобы не возникла ошибка
     User user = new User();
     user.setEmail("placeholder@mail.com");
 
@@ -106,18 +116,23 @@ public class LangMasterController {
   @PostMapping("/login")
   public String processLogin(@ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
+    // Отображение ошибок под полями ввода
+    if (bindingResult.hasErrors())
       return "pages/login";
-    }
 
     User dbUser = this.userDAO.getUser(user.getName());
 
+    // Незакодированный пароль
+    String userPassword = user.getPassword();
+
+    // Сравнение введённого пароля с закодированным
     if (dbUser != null
-      && user.getPassword().equals(dbUser.getPassword())) {
+      && passwordEncoder.matches(userPassword, dbUser.getPassword())) {
       this.user = dbUser;
       return "redirect:/langmaster";
     }
 
+    // Отображение ошибки с логином или паролем
     bindingResult.rejectValue("password",
       "error.user",
       "Неправильный логин или пароль!");

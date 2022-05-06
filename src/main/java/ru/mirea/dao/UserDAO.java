@@ -55,6 +55,7 @@ public class UserDAO {
     User user = null;
 
     try {
+      // `user_id` уникальное поле по умолчанию (PRIMARY KEY), поэтому вернётся 1 ряд
       String query = "SELECT * FROM `User` WHERE `user_id` = ?";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
 
@@ -86,7 +87,7 @@ public class UserDAO {
     User user = null;
 
     try {
-      // имя пользователя должно быть уникальным, поэтому вернётся только один ряд
+      // имя пользователя должно быть уникальным, поэтому вернётся только 1 ряд
       String query = "SELECT * FROM `User` WHERE `name` = ?";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
 
