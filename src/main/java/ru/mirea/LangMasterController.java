@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +36,8 @@ public class LangMasterController {
    * на адрес /langmaster
    */
   @GetMapping()
-  public String displayIndexPage() {
+  public String displayIndexPage(Model model) {
+    model.addAttribute("user", this.user);
     return "index";
   }
 
@@ -70,7 +70,20 @@ public class LangMasterController {
     if (bindingResult.hasErrors())
       return "pages/register";
 
+    /* Проверка на существование пользователя с указанным именем */
+    this.user = this.userDAO.getUser(user.getName());
+
+    if (this.user != null) {
+      bindingResult.rejectValue("name",
+        "error.user",
+        "Имя " + user.getName() + " уже занято!");
+      return "pages/register";
+    }
+
+    /* Добавление пользователя в БД и авторизация */
     this.userDAO.registerUser(user);
+    this.user = this.userDAO.getUser(user.getName());
+
     return "redirect:/langmaster";
   }
 
@@ -109,6 +122,15 @@ public class LangMasterController {
       "error.user",
       "Неправильный логин или пароль!");
     return "pages/login";
+  }
+
+  /**
+   * Выполняет выход из аккаунта
+   */
+  @PostMapping("/logout")
+  public String processLogout() {
+    this.user = null;
+    return "redirect:/langmaster";
   }
 
   /**

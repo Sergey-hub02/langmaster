@@ -93,6 +93,7 @@ public class UserDAO {
       preparedStatement.setString(1, name);
       ResultSet result = preparedStatement.executeQuery();
 
+      // Пользователь с указанным именем не найден
       if (!result.next()) {
         return null;
       }

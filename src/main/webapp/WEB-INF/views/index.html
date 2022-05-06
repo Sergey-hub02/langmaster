@@ -31,11 +31,22 @@
       </div>
 
       <nav class="nav" id="nav">
-        <a href="/langmaster/profile" class="nav__link">Профиль</a>
-        <a href="/langmaster/register" class="nav__link">Регистрация</a>
-        <a href="/langmaster/login" class="nav__link">Войти</a>
+        <a th:if="${user != null}"
+           href="/langmaster/profile"
+           class="nav__link">Профиль</a>
 
-        <form class="logout" action="/langmaster">
+        <a th:if="${user == null}"
+           href="/langmaster/register"
+           class="nav__link">Регистрация</a>
+
+        <a th:if="${user == null}"
+           href="/langmaster/login"
+           class="nav__link">Войти</a>
+
+        <form th:if="${user != null}"
+              th:action="@{/langmaster/logout}"
+              th:method="POST"
+              class="logout">
           <button class="nav__link" type="submit">Выйти</button>
         </form>
       </nav>
