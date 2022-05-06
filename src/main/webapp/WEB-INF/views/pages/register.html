@@ -25,15 +25,36 @@
         class="form">
 
     <div class="form__element">
-      <input type="text" th:field="*{name}" class="input" placeholder="Имя пользователя">
+      <input type="text"
+             th:field="*{name}"
+             class="input"
+             placeholder="Имя пользователя">
+
+      <p th:if="${#fields.hasErrors('name')}"
+         th:errors="*{name}"
+         class="error">Error</p>
     </div>
 
     <div class="form__element">
-      <input type="email" th:field="*{email}" class="input" placeholder="Адрес электронной почты">
+      <input type="email"
+             th:field="*{email}"
+             class="input"
+             placeholder="Адрес электронной почты">
+
+      <p th:if="${#fields.hasErrors('email')}"
+         th:errors="*{email}"
+         class="error">Error</p>
     </div>
 
     <div class="form__element">
-      <input type="password" th:field="*{password}" class="input" placeholder="Пароль">
+      <input type="password"
+             th:field="*{password}"
+             class="input"
+             placeholder="Пароль">
+
+      <p th:if="${#fields.hasErrors('password')}"
+         th:errors="*{password}"
+         class="error">Error</p>
     </div>
 
     <div class="form__element centered">

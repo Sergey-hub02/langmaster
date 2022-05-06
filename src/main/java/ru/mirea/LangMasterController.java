@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.mirea.dao.UserDAO;
 import ru.mirea.models.User;
+
+import javax.validation.Valid;
 
 /**
  * Обработчик HTTP-запросов приложения
@@ -62,7 +65,11 @@ public class LangMasterController {
    * и добавляет запись о нём в БД
    */
   @PostMapping("/register")
-  public String processRegister(@ModelAttribute("user") User user) {
+  public String processRegister(@ModelAttribute("user") @Valid User user,
+                                BindingResult bindingResult) {
+    if (bindingResult.hasErrors())
+      return "pages/register";
+
     this.userDAO.registerUser(user);
     return "redirect:/langmaster";
   }
@@ -73,7 +80,10 @@ public class LangMasterController {
    */
   @GetMapping("/login")
   public String displayLoginPage(Model model) {
-    model.addAttribute("user", new User());
+    User user = new User();
+    user.setEmail("placeholder@mail.com");
+
+    model.addAttribute("user", user);
     return "pages/login";
   }
 
@@ -81,23 +91,23 @@ public class LangMasterController {
    * Получает данные из формы и выполняет авторизацию пользователя
    */
   @PostMapping("/login")
-  public String processLogin(@ModelAttribute("user") User user,
+  public String processLogin(@ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
-      System.out.println("hello");
       return "pages/login";
     }
 
     User dbUser = this.userDAO.getUser(user.getName());
-    System.out.println(dbUser);
 
-    if (user.getPassword().equals(dbUser.getPassword())) {
-      System.out.println("ok");
+    if (dbUser != null
+      && user.getPassword().equals(dbUser.getPassword())) {
       this.user = dbUser;
       return "redirect:/langmaster";
     }
 
-    System.out.println("not ok");
+    bindingResult.rejectValue("password",
+      "error.user",
+      "Неправильный логин или пароль!");
     return "pages/login";
   }
 

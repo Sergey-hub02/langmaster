@@ -93,9 +93,13 @@ public class UserDAO {
       preparedStatement.setString(1, name);
       ResultSet result = preparedStatement.executeQuery();
 
+      if (!result.next()) {
+        return null;
+      }
+
       user = new User();
 
-      user.setId(result.getInt("id"));
+      user.setId(result.getInt("user_id"));
       user.setName(result.getString("name"));
       user.setEmail(result.getString("email"));
       user.setPassword(result.getString("password"));
