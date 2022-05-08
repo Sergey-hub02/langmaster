@@ -58,7 +58,8 @@ h3 {
 
 /* Сброс стилей для элементов форм */
 button,
-input {
+input,
+textarea {
   margin: 0;
   padding: 0;
 
