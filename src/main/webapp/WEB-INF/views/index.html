@@ -32,7 +32,7 @@
 
       <nav class="nav" id="nav">
         <a th:if="${user != null}"
-           href="/langmaster/profile"
+           th:href="@{/langmaster/profile/{name}(name=${user.getName()})}"
            class="nav__link">Профиль</a>
 
         <a th:if="${user == null}"
