@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
@@ -19,18 +19,43 @@
 <div class="form__container">
   <h1 class="form__title">Создание курса</h1>
 
-  <form class="form">
+  <form th:action="@{/langmaster/course/new}"
+        th:method="POST"
+        th:object="${course}"
+        enctype="multipart/form-data"
+        class="form">
 
     <div class="form__element">
       <input type="text"
+             th:field="*{title}"
              class="input"
              placeholder="Название курса">
+
+      <p th:if="${#fields.hasErrors('title')}"
+         th:errors="*{title}"
+         class="error">Ошибка</p>
     </div>
 
     <div class="form__element">
       <input type="text"
+             th:field="*{description}"
              class="input"
              placeholder="Описание курса">
+
+      <p th:if="${#fields.hasErrors('description')}"
+         th:errors="*{description}"
+         class="error">Ошибка</p>
+    </div>
+
+    <div class="form__element">
+      <input type="file"
+             th:field="*{image}"
+             class="input"
+             placeholder="Изображение для курса">
+
+      <p th:if="${#fields.hasErrors('image')}"
+         th:errors="*{image}"
+         class="error">Ошибка</p>
     </div>
 
     <div class="form__element centered">

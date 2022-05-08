@@ -35,6 +35,10 @@
            th:href="@{/langmaster/profile/{name}(name=${user.getName()})}"
            class="nav__link">Профиль</a>
 
+        <a th:if="${userIsAdmin}"
+           href="/langmaster/course/new"
+           class="nav__link">Создать курс</a>
+
         <a th:if="${user == null}"
            href="/langmaster/register"
            class="nav__link">Регистрация</a>

@@ -1,16 +1,24 @@
 package ru.mirea;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+import ru.mirea.dao.CourseDAO;
 import ru.mirea.dao.UserDAO;
+import ru.mirea.models.Course;
 import ru.mirea.models.User;
 
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Обработчик HTTP-запросов приложения
@@ -19,18 +27,25 @@ import javax.validation.Valid;
 @RequestMapping("/langmaster")
 public class LangMasterController {
   private User user = null;
+
   private UserDAO userDAO;
+  private CourseDAO courseDAO;
+  private ServletContext servletContext;
 
   /* Объект, позволяющий хэшировать пароли */
   private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
   /**
-   * Внедрение зависимостей для работы с БД
-   * @param userDAO                   объект DAO для работы с БД
+   * Внедрение зависимостей
+   * @param userDAO                   объект, позволяющий работать с пользователями
+   * @param courseDAO                 объект, позволяющий работать с курсами
+   * @param servletContext            контекст приложения
    */
   @Autowired
-  public LangMasterController(UserDAO userDAO) {
+  public LangMasterController(UserDAO userDAO, CourseDAO courseDAO, ServletContext servletContext) {
     this.userDAO = userDAO;
+    this.courseDAO = courseDAO;
+    this.servletContext = servletContext;
   }
 
   /**
@@ -40,6 +55,11 @@ public class LangMasterController {
   @GetMapping()
   public String displayIndexPage(Model model) {
     model.addAttribute("user", this.user);
+
+    // Если пользователь авторизован, то проверяем, является ли он админом
+    if (this.user != null)
+      model.addAttribute("userIsAdmin", this.userDAO.isAdmin(this.user.getId()));
+
     return "index";
   }
 
@@ -50,6 +70,14 @@ public class LangMasterController {
   @GetMapping("/profile/{name}")
   public String displayProfilePage(@PathVariable("name") String name, Model model) {
     model.addAttribute("user", this.userDAO.getUser(name));
+
+    if (this.user != null) {
+      final int adminId = this.user.getId();
+
+      model.addAttribute("userIsAdmin", this.userDAO.isAdmin(adminId));
+      model.addAttribute("createdCourses", this.courseDAO.getCourses(adminId));
+    }
+
     return "pages/profile";
   }
 
@@ -154,6 +182,48 @@ public class LangMasterController {
   @GetMapping("/course")
   public String displayCoursePage() {
     return "pages/course";
+  }
+
+  @GetMapping("/course/new")
+  public String displayCourseCreationPage(Model model) {
+    if (this.user == null)
+      return "redirect:/langmaster/login";
+
+    if (!this.userDAO.isAdmin(this.user.getId()))
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Невозможно найти ресурс!");
+
+    model.addAttribute("user", this.user);
+    model.addAttribute("course", new Course());
+
+    return "pages/courseCreation";
+  }
+
+  @PostMapping("/course/new")
+  public String processCourseCreation(@ModelAttribute("course") @Valid Course course,
+                                      BindingResult bindingResult) {
+    if (bindingResult.hasErrors())
+      return "pages/courseCreation";
+
+    // Создание изображения
+    MultipartFile courseImage = course.getImage();
+
+    if (courseImage != null || !courseImage.isEmpty()) {
+      // Генерация пути и названия картинки
+      String imageName = this.servletContext.getRealPath("/")
+        + "resources/images/"
+        + courseImage.getOriginalFilename();
+
+      try {
+        // Загрузка картинки на сервер
+        courseImage.transferTo(new File(imageName));
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+
+    this.courseDAO.createCourse(this.user.getId(), course);
+    return "redirect:/langmaster";
   }
 
   /**
