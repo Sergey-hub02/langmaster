@@ -101,6 +101,7 @@
             <td class="table__cell"
                 th:if="${currentCourses != null}"
                 th:text="${currentCourses.size()}">0</td>
+
             <td class="table__cell"
                 th:unless="${currentCourses != null}">0</td>
           </tr>
@@ -134,7 +135,7 @@
     </header>
 
     <div class="section__content">
-      <div class="courses">
+      <div th:if="${currentCourses != null && currentCourses.size() != 0}" class="courses">
 
         <div th:each="course : ${currentCourses}" class="course">
           <a th:href="@{/langmaster/course/{id}(id=${course.getId()})}">
@@ -153,6 +154,10 @@
         </div>
 
       </div> <!-- ./courses -->
+
+      <div th:unless="${currentCourses != null && currentCourses.size() != 0}">
+        <p>На данный момент вы не проходите никаких курсов!</p>
+      </div>
     </div> <!-- ./section__content -->
   </div> <!-- ./container -->
 </section>
@@ -166,7 +171,7 @@
     </header>
 
     <div class="section__content">
-      <div class="courses">
+      <div th:if="${createdCourses.size() != 0}" class="courses">
 
         <div th:each="course : ${createdCourses}" class="course">
           <a th:href="@{/langmaster/course/{id}(id=${course.getId()})}">
@@ -184,6 +189,10 @@
           </a>
         </div>
 
+      </div> <!-- ./courses -->
+
+      <div th:unless="${createdCourses.size() != 0}">
+        <p>На данный момент вы не создали ни одного курса!</p>
       </div>
     </div> <!-- ./section__content -->
   </div> <!-- ./container -->

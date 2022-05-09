@@ -69,84 +69,29 @@
     </header>
 
     <div class="section__content">
-      <div class="courses">
+      <div th:if="${currentCourses != null && currentCourses.size() != 0}" class="courses">
 
-        <div class="course">
-          <a href="/langmaster/course">
+        <div th:each="course : ${currentCourses}" class="course">
+          <a th:href="@{/langmaster/course/{id}(id=${course.getId()})}">
             <div class="course__wrapper">
               <div class="course__image">
-                <img src="/resources/images/courses/english.jpg" alt="English">
+                <img th:src="@{/resources/images/{image}(image=${course.getImage().getOriginalFilename()})}"
+                     alt="">
               </div>
 
               <div class="course__info">
-                <h3 class="course__title">Английский язык для чайников</h3>
-                <p class="course__description">Курс английского языка для начинающих</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="course">
-          <a href="/langmaster/course">
-            <div class="course__wrapper">
-              <div class="course__image">
-                <img src="/resources/images/courses/english.jpg" alt="English">
-              </div>
-
-              <div class="course__info">
-                <h3 class="course__title">Английский язык для чайников</h3>
-                <p class="course__description">Курс английского языка для начинающих</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="course">
-          <a href="/langmaster/course">
-            <div class="course__wrapper">
-              <div class="course__image">
-                <img src="/resources/images/courses/english.jpg" alt="English">
-              </div>
-
-              <div class="course__info">
-                <h3 class="course__title">Английский язык для чайников</h3>
-                <p class="course__description">Курс английского языка для начинающих</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="course">
-          <a href="/langmaster/course">
-            <div class="course__wrapper">
-              <div class="course__image">
-                <img src="/resources/images/courses/english.jpg" alt="English">
-              </div>
-
-              <div class="course__info">
-                <h3 class="course__title">Английский язык для чайников</h3>
-                <p class="course__description">Курс английского языка для начинающих</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="course">
-          <a href="/langmaster/course">
-            <div class="course__wrapper">
-              <div class="course__image">
-                <img src="/resources/images/courses/english.jpg" alt="English">
-              </div>
-
-              <div class="course__info">
-                <h3 class="course__title">Английский язык для чайников</h3>
-                <p class="course__description">Курс английского языка для начинающих</p>
+                <h3 th:text="${course.getTitle()}" class="course__title">Название курса</h3>
+                <p th:text="${course.getDescription()}" class="course__description">Описание курса</p>
               </div>
             </div>
           </a>
         </div>
 
       </div> <!-- ./courses -->
+
+      <div th:unless="${currentCourses != null && currentCourses.size() != 0}">
+        <p>На данный момент вы не проходите никаких курсов!</p>
+      </div>
     </div> <!-- ./section__content -->
   </div> <!-- ./container -->
 </section>
@@ -162,76 +107,17 @@
     <div class="section__content">
       <div class="courses">
 
-        <div class="course">
-          <a href="/langmaster/course">
+        <div th:each="course : ${allCourses}" class="course">
+          <a th:href="@{/langmaster/course/{id}(id=${course.getId()})}">
             <div class="course__wrapper">
               <div class="course__image">
-                <img src="/resources/images/courses/english.jpg" alt="English">
+                <img th:src="@{/resources/images/{image}(image=${course.getImage().getOriginalFilename()})}"
+                     alt="">
               </div>
 
               <div class="course__info">
-                <h3 class="course__title">Английский язык для чайников</h3>
-                <p class="course__description">Курс английского языка для начинающих</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="course">
-          <a href="/langmaster/course">
-            <div class="course__wrapper">
-              <div class="course__image">
-                <img src="/resources/images/courses/french.jpg" alt="French">
-              </div>
-
-              <div class="course__info">
-                <h3 class="course__title">Французский язык для чайников</h3>
-                <p class="course__description">Курс французского языка для начинающих</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="course">
-          <a href="/langmaster/course">
-            <div class="course__wrapper">
-              <div class="course__image">
-                <img src="/resources/images/courses/korean.jpg" alt="Korean">
-              </div>
-
-              <div class="course__info">
-                <h3 class="course__title">Корейского язык для чайников</h3>
-                <p class="course__description">Курс корейского языка для начинающих</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="course">
-          <a href="/langmaster/course">
-            <div class="course__wrapper">
-              <div class="course__image">
-                <img src="/resources/images/courses/french.jpg" alt="French">
-              </div>
-
-              <div class="course__info">
-                <h3 class="course__title">Французский язык для чайников</h3>
-                <p class="course__description">Курс французского языка для начинающих</p>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="course">
-          <a href="/langmaster/course">
-            <div class="course__wrapper">
-              <div class="course__image">
-                <img src="/resources/images/courses/korean.jpg" alt="Korean">
-              </div>
-
-              <div class="course__info">
-                <h3 class="course__title">Корейского язык для чайников</h3>
-                <p class="course__description">Курс корейского языка для начинающих</p>
+                <h3 th:text="${course.getTitle()}" class="course__title">Название курса</h3>
+                <p th:text="${course.getDescription()}" class="course__description">Описание курса</p>
               </div>
             </div>
           </a>

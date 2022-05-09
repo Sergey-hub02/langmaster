@@ -57,9 +57,14 @@ public class LangMasterController {
     model.addAttribute("user", this.user);
 
     // Если пользователь авторизован, то проверяем, является ли он админом
-    if (this.user != null)
-      model.addAttribute("userIsAdmin", this.userDAO.isAdmin(this.user.getId()));
+    if (this.user != null) {
+      final int userId = this.user.getId();
 
+      model.addAttribute("userIsAdmin", this.userDAO.isAdmin(userId));
+      model.addAttribute("currentCourses", this.courseDAO.getCurrentCourses(userId));
+    }
+
+    model.addAttribute("allCourses", this.courseDAO.getAllCourses());
     return "index";
   }
 
@@ -69,16 +74,15 @@ public class LangMasterController {
    */
   @GetMapping("/profile/{name}")
   public String displayProfilePage(@PathVariable("name") String name, Model model) {
+    final int userId = this.user.getId();
     model.addAttribute("user", this.userDAO.getUser(name));
 
     if (this.user != null) {
-      final int userId = this.user.getId();
-
       model.addAttribute("userIsAdmin", this.userDAO.isAdmin(userId));
       model.addAttribute("createdCourses", this.courseDAO.getCreatedCourses(userId));
-      model.addAttribute("currentCourses", this.courseDAO.getCurrentCourses(userId));
     }
 
+    model.addAttribute("currentCourses", this.courseDAO.getCurrentCourses(userId));
     return "pages/profile";
   }
 
@@ -181,6 +185,13 @@ public class LangMasterController {
    */
   @GetMapping("/course/{courseId}")
   public String displayCoursePage(@PathVariable("courseId") int courseId, Model model) {
+    final int userId = this.user.getId();
+    model.addAttribute("user", this.user);
+
+    if (this.user != null) {
+      model.addAttribute("userIsAdmin", this.userDAO.isAdmin(userId));
+    }
+
     model.addAttribute("course", this.courseDAO.getCourse(courseId));
     return "pages/course";
   }

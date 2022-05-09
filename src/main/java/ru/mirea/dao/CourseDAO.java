@@ -209,4 +209,39 @@ public class CourseDAO {
 
     return courses;
   }
+
+  /**
+   * Возвращает список всех доступных курсов
+   */
+  public List<Course> getAllCourses() {
+    List<Course> courses = null;
+
+    try {
+      Statement statement = conn.createStatement();
+      ResultSet result = statement.executeQuery("SELECT * FROM `Course`");
+
+      // В БД нет никаких курсов
+      if (!result.next())
+        return null;
+
+      courses = new ArrayList<>();
+
+      do {
+        Course course = new Course();
+
+        course.setId(result.getInt("course_id"));
+        course.setTitle(result.getString("title"));
+        course.setDescription(result.getString("description"));
+        course.setImage(this.createImage(result.getString("image")));
+
+        courses.add(course);
+      }
+      while (result.next());
+    }
+    catch (SQLException | IOException e) {
+      e.printStackTrace();
+    }
+
+    return courses;
+  }
 }
