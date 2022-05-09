@@ -10,7 +10,6 @@ import ru.mirea.models.Course;
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -34,6 +33,21 @@ public class CourseDAO {
     catch (SQLException | ClassNotFoundException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Возвращает объект изображения
+   * @param imageName           название изображения
+   */
+  private MultipartFile createImage(String imageName) throws IOException {
+    File imageFile = new File(this.servletContext.getRealPath("/")
+      + "resources/images/"
+      + imageName);
+    FileInputStream imageStream = new FileInputStream(imageFile);
+
+    return new MockMultipartFile("file", imageFile.getName(),
+      "image/jpeg",
+      IOUtils.toByteArray(imageStream));
   }
 
   /**
@@ -68,6 +82,39 @@ public class CourseDAO {
   }
 
   /**
+   * Находит курс по указанному id
+   * @param courseId        id нужного курса
+   */
+  public Course getCourse(int courseId) {
+    Course course = null;
+
+    try {
+      String query = "SELECT * FROM `Course` WHERE `course_id` = ?";
+
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+      preparedStatement.setInt(1, courseId);
+
+      ResultSet result = preparedStatement.executeQuery();
+
+      // Курс с указанным id не найден
+      if (!result.next())
+        return null;
+
+      course = new Course();
+
+      course.setId(result.getInt("course_id"));
+      course.setTitle(result.getString("title"));
+      course.setDescription(result.getString("description"));
+      course.setImage(this.createImage(result.getString("image")));
+    }
+    catch (SQLException | IOException e) {
+      e.printStackTrace();
+    }
+
+    return course;
+  }
+
+  /**
    * Возвращает список курсов, созданных пользователем с указанным id
    * @param authorId      id пользователя
    */
@@ -97,19 +144,8 @@ public class CourseDAO {
         course.setId(result.getInt("course_id"));
         course.setTitle(result.getString("title"));
         course.setDescription(result.getString("description"));
+        course.setImage(this.createImage(result.getString("image")));
 
-        // Создание изображения
-        String imageName = result.getString("image");
-
-        File imageFile = new File(this.servletContext.getRealPath("/")
-          + "resources/images/"
-          + imageName);
-        FileInputStream imageStream = new FileInputStream(imageFile);
-        MultipartFile image = new MockMultipartFile("file", imageFile.getName(),
-          "image/jpeg",
-          IOUtils.toByteArray(imageStream));
-
-        course.setImage(image);
         courses.add(course);
       }
       while (result.next());

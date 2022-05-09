@@ -178,9 +178,9 @@ public class LangMasterController {
    * Отображает страницу курса при
    * GET-запросе на адрес /langmaster/course
    */
-  // TODO: добавить @PathVariable для id курса
-  @GetMapping("/course")
-  public String displayCoursePage() {
+  @GetMapping("/course/{courseId}")
+  public String displayCoursePage(@PathVariable("courseId") int courseId, Model model) {
+    model.addAttribute("course", this.courseDAO.getCourse(courseId));
     return "pages/course";
   }
 
