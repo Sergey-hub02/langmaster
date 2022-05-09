@@ -185,11 +185,13 @@ public class LangMasterController {
    */
   @GetMapping("/course/{courseId}")
   public String displayCoursePage(@PathVariable("courseId") int courseId, Model model) {
-    final int userId = this.user.getId();
     model.addAttribute("user", this.user);
 
     if (this.user != null) {
+      final int userId = this.user.getId();
+
       model.addAttribute("userIsAdmin", this.userDAO.isAdmin(userId));
+      model.addAttribute("courseIsInUserList", this.courseDAO.courseIsInUserList(userId, courseId));
     }
 
     model.addAttribute("course", this.courseDAO.getCourse(courseId));

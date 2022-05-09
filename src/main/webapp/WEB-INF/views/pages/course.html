@@ -115,6 +115,7 @@
 
       <form th:action="@{/langmaster/course/{id}/assign(id=${course.getId()})}"
             th:method="POST"
+            th:if="${user != null && !courseIsInUserList}"
             class="assign">
         <button class="assign__button">Пройти курс</button>
       </form>

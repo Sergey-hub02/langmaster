@@ -244,4 +244,29 @@ public class CourseDAO {
 
     return courses;
   }
+
+  /**
+   * Возвращает true, если пользователь с указанным id проходит указанный курс
+   * @param userId          id пользователя
+   * @param courseId        id курса
+   */
+  public boolean courseIsInUserList(int userId, int courseId) {
+    boolean courseIsInList = false;
+
+    try {
+      String query = "SELECT * FROM `UserCourse` WHERE `user_id` = ? AND `course_id` = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setInt(1, userId);
+      preparedStatement.setInt(2, courseId);
+
+      ResultSet result = preparedStatement.executeQuery();
+      courseIsInList = result.next();
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return courseIsInList;
+  }
 }
