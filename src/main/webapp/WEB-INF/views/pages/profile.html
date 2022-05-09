@@ -37,6 +37,10 @@
            th:href="@{/langmaster/profile/{name}(name=${user.getName()})}"
            class="nav__link">Профиль</a>
 
+        <a th:if="${userIsAdmin}"
+           href="/langmaster/course/new"
+           class="nav__link">Создать курс</a>
+
         <a th:if="${user == null}"
            href="/langmaster/register"
            class="nav__link">Регистрация</a>
@@ -94,7 +98,11 @@
             <td class="table__cell">Количество проходимых курсов</td>
             <td class="table__cell">&nbsp;</td>
             <td class="table__cell">&nbsp;</td>
-            <td class="table__cell">0</td>
+            <td class="table__cell"
+                th:if="${currentCourses != null}"
+                th:text="${currentCourses.size()}">0</td>
+            <td class="table__cell"
+                th:unless="${currentCourses != null}">0</td>
           </tr>
 
           <tr class="table__row">
@@ -127,6 +135,23 @@
 
     <div class="section__content">
       <div class="courses">
+
+        <div th:each="course : ${currentCourses}" class="course">
+          <a th:href="@{/langmaster/course/{id}(id=${course.getId()})}">
+            <div class="course__wrapper">
+              <div class="course__image">
+                <img th:src="@{/resources/images/{image}(image=${course.getImage().getOriginalFilename()})}"
+                     alt="">
+              </div>
+
+              <div class="course__info">
+                <h3 th:text="${course.getTitle()}" class="course__title">Название курса</h3>
+                <p th:text="${course.getDescription()}" class="course__description">Описание курса</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
       </div> <!-- ./courses -->
     </div> <!-- ./section__content -->
   </div> <!-- ./container -->

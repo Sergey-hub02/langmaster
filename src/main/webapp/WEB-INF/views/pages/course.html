@@ -109,7 +109,9 @@
         </ul>
       </div> <!-- ./course__lessons -->
 
-      <form action="/langmaster/course/{id}/assign" method="POST" class="assign">
+      <form th:action="@{/langmaster/course/{id}/assign(id=${course.getId()})}"
+            th:method="POST"
+            class="assign">
         <button class="assign__button">Пройти курс</button>
       </form>
     </div> <!-- ./section__content -->

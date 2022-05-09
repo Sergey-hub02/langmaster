@@ -72,10 +72,11 @@ public class LangMasterController {
     model.addAttribute("user", this.userDAO.getUser(name));
 
     if (this.user != null) {
-      final int adminId = this.user.getId();
+      final int userId = this.user.getId();
 
-      model.addAttribute("userIsAdmin", this.userDAO.isAdmin(adminId));
-      model.addAttribute("createdCourses", this.courseDAO.getCourses(adminId));
+      model.addAttribute("userIsAdmin", this.userDAO.isAdmin(userId));
+      model.addAttribute("createdCourses", this.courseDAO.getCreatedCourses(userId));
+      model.addAttribute("currentCourses", this.courseDAO.getCurrentCourses(userId));
     }
 
     return "pages/profile";
@@ -184,6 +185,10 @@ public class LangMasterController {
     return "pages/course";
   }
 
+  /**
+   * Отображает страницу создания курса
+   * @param model         модель
+   */
   @GetMapping("/course/new")
   public String displayCourseCreationPage(Model model) {
     if (this.user == null)
@@ -198,6 +203,11 @@ public class LangMasterController {
     return "pages/courseCreation";
   }
 
+  /**
+   * Обрабатывает данные из формы и создаёт курс
+   * @param course              объект курса
+   * @param bindingResult       результат обработки полей формы
+   */
   @PostMapping("/course/new")
   public String processCourseCreation(@ModelAttribute("course") @Valid Course course,
                                       BindingResult bindingResult) {
@@ -223,6 +233,16 @@ public class LangMasterController {
     }
 
     this.courseDAO.createCourse(this.user.getId(), course);
+    return "redirect:/langmaster";
+  }
+
+  @PostMapping("/course/{courseId}/assign")
+  public String processAssignCourse(@PathVariable("courseId") int courseId) {
+    // Страницу нельзя отобразить, если пользователь не авторизован
+    if (this.user == null)
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Невозможно найти ресурс!");
+
+    this.courseDAO.assignCourse(this.user.getId(), courseId);
     return "redirect:/langmaster";
   }
 

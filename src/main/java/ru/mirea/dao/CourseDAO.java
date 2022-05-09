@@ -82,6 +82,26 @@ public class CourseDAO {
   }
 
   /**
+   * Добавляет курс в список проходимых курсов пользователя
+   * @param userId        id пользователя, проходящего курс
+   * @param courseId      id курса
+   */
+  public void assignCourse(int userId, int courseId) {
+    try {
+      String query = "INSERT INTO `UserCourse` VALUES(?, ?)";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setInt(1, userId);
+      preparedStatement.setInt(2, courseId);
+
+      preparedStatement.executeUpdate();
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
    * Находит курс по указанному id
    * @param courseId        id нужного курса
    */
@@ -118,7 +138,7 @@ public class CourseDAO {
    * Возвращает список курсов, созданных пользователем с указанным id
    * @param authorId      id пользователя
    */
-  public List<Course> getCourses(int authorId) {
+  public List<Course> getCreatedCourses(int authorId) {
     List<Course> courses = null;
 
     try {
@@ -151,6 +171,39 @@ public class CourseDAO {
       while (result.next());
     }
     catch (SQLException | IOException e) {
+      e.printStackTrace();
+    }
+
+    return courses;
+  }
+
+  /**
+   * Возвращает список курсов, которые проходит пользователь с указанным id
+   * @param userId        id пользователя
+   */
+  public List<Course> getCurrentCourses(int userId) {
+    List<Course> courses = null;
+
+    try {
+      String query = "SELECT `course_id` FROM `UserCourse` WHERE `user_id` = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setInt(1, userId);
+      ResultSet result = preparedStatement.executeQuery();
+
+      // Пользователь с указанным id не проходит никаких курсов
+      if (!result.next())
+        return null;
+
+      courses = new ArrayList<>();
+
+      do {
+        Course course = this.getCourse(result.getInt("course_id"));
+        courses.add(course);
+      }
+      while (result.next());
+    }
+    catch (SQLException e) {
       e.printStackTrace();
     }
 
