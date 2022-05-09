@@ -115,4 +115,27 @@ public class UserDAO {
 
     return user;
   }
+
+  /**
+   * Возвращает true, если пользователь с указанным id является администратором
+   * @param id        id пользователя
+   */
+  public boolean isAdmin(int id) {
+    boolean userIsAdmin = false;
+
+    try {
+      String query = "SELECT * FROM `UserAdmin` WHERE `user_id` = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setInt(1, id);
+      ResultSet result = preparedStatement.executeQuery();
+
+      userIsAdmin = result.next();
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return userIsAdmin;
+  }
 }

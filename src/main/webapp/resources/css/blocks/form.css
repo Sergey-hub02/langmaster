@@ -35,7 +35,8 @@
   color: #ff1423;
 }
 
-.input {
+.input,
+.textarea {
   width: 100%;
 
   padding: 8px 12px;

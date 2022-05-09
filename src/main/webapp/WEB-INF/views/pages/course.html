@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Курс</title>
+  <title th:text="${course.getTitle()}">Курс</title>
 
   <link rel="stylesheet" href="/resources/css/style.css">
   <link rel="stylesheet" href="/resources/css/blocks/container.css">
@@ -32,11 +32,26 @@
       </div>
 
       <nav class="nav" id="nav">
-        <a href="/langmaster/profile" class="nav__link">Профиль</a>
-        <a href="/langmaster/register" class="nav__link">Регистрация</a>
-        <a href="/langmaster/login" class="nav__link">Войти</a>
+        <a th:if="${user != null}"
+           th:href="@{/langmaster/profile/{name}(name=${user.getName()})}"
+           class="nav__link">Профиль</a>
 
-        <form class="logout" action="/langmaster">
+        <a th:if="${userIsAdmin}"
+           href="/langmaster/course/new"
+           class="nav__link">Создать курс</a>
+
+        <a th:if="${user == null}"
+           href="/langmaster/register"
+           class="nav__link">Регистрация</a>
+
+        <a th:if="${user == null}"
+           href="/langmaster/login"
+           class="nav__link">Войти</a>
+
+        <form th:if="${user != null}"
+              th:action="@{/langmaster/logout}"
+              th:method="POST"
+              class="logout">
           <button class="nav__link" type="submit">Выйти</button>
         </form>
       </nav>
@@ -51,14 +66,16 @@
 <section class="section">
   <div class="container">
     <header class="section__header">
-      <h2 class="section__title">Название курса</h2>
-      <img src="/resources/images/courses/english.jpg" alt="English" class="section__image">
+      <h2 th:text="${course.getTitle()}" class="section__title">Название курса</h2>
+      <img th:src="@{/resources/images/{image}(image=${course.getImage().getOriginalFilename()})}"
+           alt=""
+           class="section__image">
     </header>
 
     <div class="section__content">
       <div class="course__description">
         <strong>Описание курса: </strong>
-        <span>Оставлю здесь хоть какой-нибудь бессмысленный текст, чтобы заполнить пространство страницы.</span>
+        <span th:text="${course.getDescription()}">Описание курса</span>
       </div>
 
       <h3>Уроки курса</h3>
@@ -96,7 +113,9 @@
         </ul>
       </div> <!-- ./course__lessons -->
 
-      <form action="/langmaster/course/{id}/assign" method="POST" class="assign">
+      <form th:action="@{/langmaster/course/{id}/assign(id=${course.getId()})}"
+            th:method="POST"
+            class="assign">
         <button class="assign__button">Пройти курс</button>
       </form>
     </div> <!-- ./section__content -->

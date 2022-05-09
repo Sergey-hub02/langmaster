@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -41,6 +42,7 @@ public class MVCConfig implements WebMvcConfigurer {
     templateResolver.setApplicationContext(this.applicationContext);
     templateResolver.setPrefix("/WEB-INF/views/");
     templateResolver.setSuffix(".html");
+    templateResolver.setCharacterEncoding("UTF-8");
 
     return templateResolver;
   }
@@ -56,6 +58,16 @@ public class MVCConfig implements WebMvcConfigurer {
     templateEngine.setEnableSpringELCompiler(true);
 
     return templateEngine;
+  }
+
+  /**
+   * Создаёт бин, управляющий загрузкой файлов на сервер
+   */
+  @Bean
+  public CommonsMultipartResolver multipartResolver() {
+    CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+    multipartResolver.setMaxUploadSizePerFile(1024 * 1024 * 256);
+    return multipartResolver;
   }
 
   /**
