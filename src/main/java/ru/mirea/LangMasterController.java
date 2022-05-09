@@ -6,10 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.mirea.dao.UserDAO;
 import ru.mirea.models.User;
 
@@ -50,8 +47,9 @@ public class LangMasterController {
    * Отображает страницу профиля пользователя при
    * GET-запросе на адрес /langmaster/profile
    */
-  @GetMapping("/profile")
-  public String displayProfilePage() {
+  @GetMapping("/profile/{name}")
+  public String displayProfilePage(@PathVariable("name") String name, Model model) {
+    model.addAttribute("user", this.userDAO.getUser(name));
     return "pages/profile";
   }
 
