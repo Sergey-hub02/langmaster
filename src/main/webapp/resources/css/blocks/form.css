@@ -1,24 +1,6 @@
 /*=========================
   СТИЛИ ДЛЯ ЭЛЕМЕНТОВ ФОРМЫ
 =========================*/
-.form__container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  width: 100%;
-  max-width: 500px;
-
-  z-index: 100;
-  transform: translate(-50%, -50%);
-
-  background-color: var(--bg-secondary);
-  color: var(--bg-primary);
-
-  padding: 20px 25px;
-  box-shadow: 0px 0px 15px 0px var(--bg-secondary);
-}
-
 .form__title {
   text-align: center;
 }
@@ -64,12 +46,4 @@
 
 .button:hover {
   background-color: #5d7a78;
-}
-
-
-/* Медиа-запросы */
-@media (max-width: 400px) {
-  .form__container {
-    padding: 20px 15px;
-  }
 }

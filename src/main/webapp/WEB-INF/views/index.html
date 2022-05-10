@@ -7,16 +7,16 @@
 
   <title>Lang Master</title>
 
-  <link rel="stylesheet" href="/resources/css/style.css">
-  <link rel="stylesheet" href="/resources/css/blocks/container.css">
+  <link rel="stylesheet" href="../../resources/css/style.css">
+  <link rel="stylesheet" href="../../resources/css/blocks/container.css">
 
-  <link rel="stylesheet" href="/resources/css/blocks/header.css">
-  <link rel="stylesheet" href="/resources/css/blocks/logo.css">
+  <link rel="stylesheet" href="../../resources/css/blocks/header.css">
+  <link rel="stylesheet" href="../../resources/css/blocks/logo.css">
 
-  <link rel="stylesheet" href="/resources/css/blocks/section.css">
-  <link rel="stylesheet" href="/resources/css/blocks/courses.css">
+  <link rel="stylesheet" href="../../resources/css/blocks/section.css">
+  <link rel="stylesheet" href="../../resources/css/blocks/courses.css">
 
-  <link rel="stylesheet" href="/resources/css/blocks/footer.css">
+  <link rel="stylesheet" href="../../resources/css/blocks/footer.css">
 </head>
 
 
@@ -124,6 +124,42 @@
         </div>
 
       </div> <!-- ./courses -->
+    </div> <!-- ./section__content -->
+  </div> <!-- ./container -->
+</section>
+
+
+<!--========== СЕКЦИЯ "Созданные курсы" ==========-->
+<section th:if="${userIsAdmin}" class="section">
+  <div class="container">
+    <header class="section__header">
+      <h2 class="section__title">Созданные курсы</h2>
+    </header>
+
+    <div class="section__content">
+      <div th:if="${createdCourses.size() != 0}" class="courses">
+
+        <div th:each="course : ${createdCourses}" class="course">
+          <a th:href="@{/langmaster/course/{id}(id=${course.getId()})}">
+            <div class="course__wrapper">
+              <div class="course__image">
+                <img th:src="@{/resources/images/{image}(image=${course.getImage().getOriginalFilename()})}"
+                     alt="">
+              </div>
+
+              <div class="course__info">
+                <h3 th:text="${course.getTitle()}" class="course__title">Название курса</h3>
+                <p th:text="${course.getDescription()}" class="course__description">Описание курса</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+      </div> <!-- ./courses -->
+
+      <div th:unless="${createdCourses.size() != 0}">
+        <p>На данный момент вы не создали ни одного курса!</p>
+      </div>
     </div> <!-- ./section__content -->
   </div> <!-- ./container -->
 </section>
