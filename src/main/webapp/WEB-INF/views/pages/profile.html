@@ -73,6 +73,24 @@
         <td class="table__cell" th:text="${user.getRegistrationDate()}">Дата регистрации</td>
       </tr>
 
+      <tr class="table__row">
+        <td class="table__cell">
+          <a th:href="@{/langmaster/update/{id}(id=${user.getId()})}" class="button">Изменить</a>
+        </td>
+
+        <td class="table__cell">&nbsp;</td>
+        <td class="table__cell">&nbsp;</td>
+
+        <td class="table__cell">
+          <form th:action="@{/langmaster/delete/{id}(id=${user.getId()})}"
+                th:method="DELETE"
+                onsubmit="return confirm('Вы уверены, что хотите удалить аккаунт?')"
+                class="form">
+            <button class="button" type="submit">Удалить</button>
+          </form>
+        </td>
+      </tr>
+
       <!-- TODO: Отобразить количество созданных курсов, если пользователь админ -->
     </tbody>
   </table>

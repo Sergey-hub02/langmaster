@@ -184,6 +184,18 @@ public class LangMasterController {
   }
 
   /**
+   * Удаляет пользователя из БД
+   * @param userId    id пользователя
+   */
+  @DeleteMapping("/delete/{userId}")
+  public String processDeleteUser(@PathVariable("userId") int userId) {
+    this.userDAO.deleteUser(userId);
+    this.user = null;
+
+    return "redirect:/langmaster";
+  }
+
+  /**
    * Отображает страницу авторизации при GET запросе /langmaster/login
    * @param model       объект для передачи данных шаблонизатору
    */

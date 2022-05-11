@@ -161,4 +161,32 @@ public class UserDAO {
       e.printStackTrace();
     }
   }
+
+  /**
+   * Удаляет запись о пользователе в БД
+   * @param userId    id удаляемого пользователя
+   */
+  public void deleteUser(int userId) {
+    try {
+      // Удаление из таблицы `User`
+      String query = "DELETE FROM `User` WHERE `user_id` = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setInt(1, userId);
+      preparedStatement.executeUpdate();
+
+      // Удаление из таблицы `UserAdmin`
+      if (!this.isAdmin(userId))
+        return;
+
+      query = "DELETE FROM `UserAdmin` WHERE `user_id` = ?";
+      preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setInt(1, userId);
+      preparedStatement.executeUpdate();
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 }
