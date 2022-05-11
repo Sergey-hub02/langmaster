@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Обновление информации о пользователе</title>
+
+  <link rel="stylesheet" href="/resources/css/style.css">
+  <link rel="stylesheet" href="/resources/css/blocks/container.css">
+  <link rel="stylesheet" href="/resources/css/blocks/form.css">
+  <link rel="stylesheet" href="/resources/css/blocks/centeredContainer.css">
+</head>
+
+
+<body>
+
+<!--========== ФОРМА РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ ==========-->
+<div class="centered_container">
+  <h1 class="form__title">Данные пользователя</h1>
+
+  <form th:action="@{/langmaster/update/{id}(id=${userId})}"
+        th:method="PATCH"
+        th:object="${user}"
+        class="form">
+
+    <div class="form__element">
+      <input type="text"
+             th:field="*{name}"
+             class="input"
+             placeholder="Имя пользователя">
+
+      <p th:if="${#fields.hasErrors('name')}"
+         th:errors="*{name}"
+         class="error">Error</p>
+    </div>
+
+    <div class="form__element">
+      <input type="email"
+             th:field="*{email}"
+             class="input"
+             placeholder="Адрес электронной почты">
+
+      <p th:if="${#fields.hasErrors('email')}"
+         th:errors="*{email}"
+         class="error">Error</p>
+    </div>
+
+    <div class="form__element centered">
+      <button class="button" type="submit">Обновить</button>
+    </div>
+
+  </form>
+</div> <!-- ./centered_container -->
+
+</body>
+
+</html>

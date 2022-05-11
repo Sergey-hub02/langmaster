@@ -143,6 +143,47 @@ public class LangMasterController {
   }
 
   /**
+   * Отображает страницу обновления информации о пользователе
+   * @param userId      id пользователя
+   */
+  @GetMapping("/update/{userId}")
+  public String displayUpdateUserPage(@PathVariable("userId") int userId,
+                                      Model model) {
+    // Нельзя изменить информацию о пользователе без авторизации
+    // Также нельзя, будучи авторизованным, изменить информацию другого пользователя
+    if (this.user == null || this.user.getId() != userId)
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Невозможно найти ресурс!");
+
+    model.addAttribute("userId", userId);
+    model.addAttribute("user", this.user);
+
+    return "pages/updateUser";
+  }
+
+  /**
+   * Обновляет данные о пользователе
+   * @param userId          id пользователя
+   * @param user            объект пользователя
+   * @param bindingResult   объект, содержащий ошибки при заполнении полей формы
+   */
+  @PatchMapping("/update/{userId}")
+  public String processUpdateUser(@PathVariable("userId") int userId,
+                                  @ModelAttribute("user") User user,
+                                  BindingResult bindingResult) {
+    // Отображение ошибок при заполнении полей формы
+    if (bindingResult.hasErrors())
+      return "pages/updateUser";
+
+    String userPassword = this.userDAO.getUser(userId).getPassword();
+
+    user.setId(userId);
+    user.setPassword(userPassword);
+
+    this.userDAO.updateUser(user);
+    return "redirect:/langmaster";
+  }
+
+  /**
    * Отображает страницу авторизации при GET запросе /langmaster/login
    * @param model       объект для передачи данных шаблонизатору
    */

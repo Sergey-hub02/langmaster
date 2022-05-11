@@ -62,6 +62,10 @@ public class UserDAO {
       preparedStatement.setInt(1, id);
       ResultSet result = preparedStatement.executeQuery();
 
+      // Пользователь с указанным id не найден
+      if (!result.next())
+        return null;
+
       user = new User();
 
       user.setId(result.getInt("user_id"));
@@ -95,9 +99,8 @@ public class UserDAO {
       ResultSet result = preparedStatement.executeQuery();
 
       // Пользователь с указанным именем не найден
-      if (!result.next()) {
+      if (!result.next())
         return null;
-      }
 
       user = new User();
 
@@ -137,5 +140,25 @@ public class UserDAO {
     }
 
     return userIsAdmin;
+  }
+
+  /**
+   * Обновляет данные о пользователе
+   * @param user        объект пользователя
+   */
+  public void updateUser(User user) {
+    try {
+      String query = "UPDATE `User` SET `name` = ?, `email` = ? WHERE `user_id` = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setString(1, user.getName());
+      preparedStatement.setString(2, user.getEmail());
+      preparedStatement.setInt(3, user.getId());
+
+      preparedStatement.executeUpdate();
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 }
