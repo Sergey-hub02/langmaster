@@ -6,7 +6,7 @@ import ru.mirea.models.User;
 import java.sql.*;
 
 /**
- * Класс для работы с БД
+ * Класс для работы с БД с таблицей пользователей
  */
 @Component
 public class UserDAO {

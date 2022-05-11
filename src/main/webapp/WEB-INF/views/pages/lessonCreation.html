@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
@@ -7,10 +7,10 @@
 
   <title>Создание урока</title>
 
-  <link rel="stylesheet" href="../../../resources/css/style.css">
-  <link rel="stylesheet" href="../../../resources/css/blocks/container.css">
-  <link rel="stylesheet" href="../../../resources/css/blocks/form.css">
-  <link rel="stylesheet" href="../../../resources/css/blocks/centeredContainer.css">
+  <link rel="stylesheet" href="/resources/css/style.css">
+  <link rel="stylesheet" href="/resources/css/blocks/container.css">
+  <link rel="stylesheet" href="/resources/css/blocks/form.css">
+  <link rel="stylesheet" href="/resources/css/blocks/centeredContainer.css">
 </head>
 
 
@@ -20,16 +20,30 @@
 <div class="centered_container">
   <h1 class="form__title">Создание урока</h1>
 
-  <form class="form">
+  <form th:action="@{/langmaster/course/{id}/create(id=${courseId})}"
+        th:method="POST"
+        th:object="${lesson}"
+        class="form">
 
     <div class="form__element">
       <input type="text"
+             th:field="*{title}"
              class="input"
              placeholder="Название урока">
+
+      <p th:if="${#fields.hasErrors('title')}"
+         th:errors="*{title}"
+         class="error">Ошибка</p>
     </div>
 
     <div class="form__element">
-      <textarea class="textarea" placeholder="Содержание урока"></textarea>
+      <textarea th:field="*{content}"
+                class="textarea"
+                placeholder="Содержание урока"></textarea>
+
+      <p th:if="${#fields.hasErrors('content')}"
+         th:errors="*{content}"
+         class="error">Ошибка</p>
     </div>
 
     <div class="form__element centered">
@@ -37,7 +51,7 @@
     </div>
 
   </form>
-</div>
+</div> <!-- ./centered_container -->
 
 </body>
 

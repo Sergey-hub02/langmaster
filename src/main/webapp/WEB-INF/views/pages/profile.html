@@ -7,19 +7,19 @@
 
   <title th:text="${'Профиль пользователя ' + user.getName()}">Профиль</title>
 
-  <link rel="stylesheet" href="../../../resources/css/style.css">
-  <link rel="stylesheet" href="../../../resources/css/blocks/container.css">
+  <link rel="stylesheet" href="/resources/css/style.css">
+  <link rel="stylesheet" href="/resources/css/blocks/container.css">
 
-  <link rel="stylesheet" href="../../../resources/css/blocks/header.css">
-  <link rel="stylesheet" href="../../../resources/css/blocks/logo.css">
+  <link rel="stylesheet" href="/resources/css/blocks/header.css">
+  <link rel="stylesheet" href="/resources/css/blocks/logo.css">
 
-  <link rel="stylesheet" href="../../../resources/css/blocks/section.css">
-  <link rel="stylesheet" href="../../../resources/css/blocks/table.css">
-  <link rel="stylesheet" href="../../../resources/css/blocks/centeredContainer.css">
-  <link rel="stylesheet" href="../../../resources/css/blocks/form.css">
-  <link rel="stylesheet" href="../../../resources/css/blocks/courses.css">
+  <link rel="stylesheet" href="/resources/css/blocks/section.css">
+  <link rel="stylesheet" href="/resources/css/blocks/table.css">
+  <link rel="stylesheet" href="/resources/css/blocks/centeredContainer.css">
+  <link rel="stylesheet" href="/resources/css/blocks/form.css">
+  <link rel="stylesheet" href="/resources/css/blocks/courses.css">
 
-  <link rel="stylesheet" href="../../../resources/css/blocks/footer.css">
+  <link rel="stylesheet" href="/resources/css/blocks/footer.css">
 </head>
 
 
@@ -31,51 +31,51 @@
     <h2 class="section__title">Личные данные</h2>
   </header>
 
-  <div class="section__content">
-    <table class="table" cellspacing="0">
-      <tbody>
-        <tr class="table__row">
-          <td class="table__cell">ID пользователя</td>
-          <td class="table__cell">&nbsp;</td>
-          <td class="table__cell">&nbsp;</td>
-          <td class="table__cell" th:text="${user.getId()}">ID</td>
-        </tr>
+  <table class="table" cellspacing="0">
+    <tbody>
+      <tr class="table__row">
+        <td class="table__cell">ID пользователя</td>
+        <td class="table__cell">&nbsp;</td>
+        <td class="table__cell">&nbsp;</td>
+        <td class="table__cell" th:text="${user.getId()}">ID</td>
+      </tr>
 
-        <tr class="table__row">
-          <td class="table__cell">Имя пользователя</td>
-          <td class="table__cell">&nbsp;</td>
-          <td class="table__cell">&nbsp;</td>
-          <td class="table__cell" th:text="${user.getName()}">Имя</td>
-        </tr>
+      <tr class="table__row">
+        <td class="table__cell">Имя пользователя</td>
+        <td class="table__cell">&nbsp;</td>
+        <td class="table__cell">&nbsp;</td>
+        <td class="table__cell" th:text="${user.getName()}">Имя</td>
+      </tr>
 
-        <tr class="table__row">
-          <td class="table__cell">Адрес электронной почты</td>
-          <td class="table__cell">&nbsp;</td>
-          <td class="table__cell">&nbsp;</td>
-          <td class="table__cell" th:text="${user.getEmail()}">Электронная почта</td>
-        </tr>
+      <tr class="table__row">
+        <td class="table__cell">Адрес электронной почты</td>
+        <td class="table__cell">&nbsp;</td>
+        <td class="table__cell">&nbsp;</td>
+        <td class="table__cell" th:text="${user.getEmail()}">Электронная почта</td>
+      </tr>
 
-        <tr class="table__row">
-          <td class="table__cell">Количество проходимых курсов</td>
-          <td class="table__cell">&nbsp;</td>
-          <td class="table__cell">&nbsp;</td>
-          <td class="table__cell"
-              th:if="${currentCourses != null}"
-              th:text="${currentCourses.size()}">0</td>
+      <tr class="table__row">
+        <td class="table__cell">Количество проходимых курсов</td>
+        <td class="table__cell">&nbsp;</td>
+        <td class="table__cell">&nbsp;</td>
+        <td class="table__cell"
+            th:if="${currentCourses != null}"
+            th:text="${currentCourses.size()}">0</td>
 
-          <td class="table__cell"
-              th:unless="${currentCourses != null}">0</td>
-        </tr>
+        <td class="table__cell"
+            th:unless="${currentCourses != null}">0</td>
+      </tr>
 
-        <tr class="table__row">
-          <td class="table__cell">Дата регистрации аккаунта</td>
-          <td class="table__cell">&nbsp;</td>
-          <td class="table__cell">&nbsp;</td>
-          <td class="table__cell" th:text="${user.getRegistrationDate()}">Дата регистрации</td>
-        </tr>
-      </tbody>
-    </table>
-  </div> <!-- ./section__content -->
+      <tr class="table__row">
+        <td class="table__cell">Дата регистрации аккаунта</td>
+        <td class="table__cell">&nbsp;</td>
+        <td class="table__cell">&nbsp;</td>
+        <td class="table__cell" th:text="${user.getRegistrationDate()}">Дата регистрации</td>
+      </tr>
+
+      <!-- TODO: Отобразить количество созданных курсов, если пользователь админ -->
+    </tbody>
+  </table>
 </div> <!-- ./centered_container -->
 
 </body>

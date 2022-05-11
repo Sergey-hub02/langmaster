@@ -80,45 +80,34 @@
 
       <h3>Уроки курса</h3>
       <div class="course__lessons">
-        <ul class="lessons_list">
+        <ul th:if="${courseLessons != null && courseLessons.size() != 0}" class="lessons_list">
 
-          <a class="lesson__link" href="/langmaster/course/lesson">
-            <li class="lesson">Урок №1. Название урока</li>
-          </a>
-
-          <a class="lesson__link" href="/langmaster/course/lesson">
-            <li class="lesson">Урок №2. Название урока</li>
-          </a>
-
-          <a class="lesson__link" href="/langmaster/course/lesson">
-            <li class="lesson">Урок №3. Название урока</li>
-          </a>
-
-          <a class="lesson__link" href="/langmaster/course/lesson">
-            <li class="lesson">Урок №4. Название урока</li>
-          </a>
-
-          <a class="lesson__link" href="/langmaster/course/lesson">
-            <li class="lesson">Урок №5. Название урока</li>
-          </a>
-
-          <a class="lesson__link" href="/langmaster/course/lesson">
-            <li class="lesson">Урок №6. Название урока</li>
-          </a>
-
-          <a class="lesson__link" href="/langmaster/course/lesson">
-            <li class="lesson">Урок №7. Название урока</li>
+          <a th:each="lesson : ${courseLessons}"
+             th:href="${'/langmaster/course/' + {course.getId()} + '/lesson/' + {lesson.getId()}}"
+             class="lesson__link">
+            <li class="lesson"
+                th:text="${lesson.getTitle()}">Название урока</li>
           </a>
 
         </ul>
+
+        <div th:unless="${courseLessons != null && courseLessons.size() != 0}">
+          <p>Для этого курса пока нет уроков!</p>
+        </div>
       </div> <!-- ./course__lessons -->
 
       <form th:action="@{/langmaster/course/{id}/assign(id=${course.getId()})}"
             th:method="POST"
             th:if="${user != null && !courseIsInUserList}"
             class="assign">
-        <button class="assign__button">Пройти курс</button>
+        <button type="submit" class="assign__button">Пройти курс</button>
       </form>
+
+      <div th:if="${userIsCourseCreator}"
+           style="margin-top: 25px">
+        <a th:href="@{/langmaster/course/{id}/create(id=${course.getId()})}"
+           class="assign__button">Добавить урок</a>
+      </div>
     </div> <!-- ./section__content -->
   </div> <!-- ./container -->
 </section>

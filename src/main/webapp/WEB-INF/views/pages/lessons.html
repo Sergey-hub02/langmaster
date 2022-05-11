@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Уроки курса</title>
+  <title th:text="${lesson.getTitle()}">Название урока</title>
 
   <link rel="stylesheet" href="/resources/css/style.css">
   <link rel="stylesheet" href="/resources/css/blocks/container.css">
@@ -22,23 +22,13 @@
 <aside class="sidebar">
   <ul class="lessons">
     <li class="lesson__link logo">
-      <a href="/langmaster/course/lesson" class="lesson__title">LangMaster</a>
+      <a href="/langmaster" class="lesson__title">LangMaster</a>
     </li>
 
-    <li class="lesson__link">
-      <a href="/langmaster/course/lesson" class="lesson__title">Урок №1</a>
-    </li>
-
-    <li class="lesson__link">
-      <a href="/langmaster/course/lesson" class="lesson__title">Урок №2</a>
-    </li>
-
-    <li class="lesson__link">
-      <a href="/langmaster/course/lesson" class="lesson__title">Урок №3</a>
-    </li>
-
-    <li class="lesson__link">
-      <a href="/langmaster/course/lesson" class="lesson__title">Урок №4</a>
+    <li th:each="_lesson : ${lessonsList}" class="lesson__link">
+      <a th:href="${'/langmaster/course/' + {courseId} + '/lesson/' + {_lesson.getId()}}"
+         th:text="${_lesson.getTitle()}"
+         class="lesson__title">Название урока</a>
     </li>
   </ul>
 </aside>
@@ -48,16 +38,11 @@
 <main class="lesson">
   <div class="container">
     <header class="lesson__header">
-      <h1 class="lesson__title">Урок №1</h1>
-      <h2 class="lesson__theme">Какая-то тема</h2>
+      <h1 th:text="${lesson.getTitle()}" class="lesson__title">Название урока</h1>
     </header>
 
-    <div class="lesson__content">
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum tempora ipsa molestias eum laborum dolorum consectetur optio, cumque in necessitatibus neque explicabo qui recusandae, obcaecati voluptas tenetur ea, iusto, illo.</p>
-
-      <h3>Title #1</h3>
-      <p>Lorem ipsum, dolor, sit amet consectetur adipisicing elit. Architecto doloribus, odit iusto. Vero quibusdam quam laboriosam odit, delectus quia ratione ad totam iste excepturi nostrum unde! Non animi facere sapiente?</p>
-    </div> <!-- ./lesson__content -->
+    <div th:utext="${lesson.getContent()}"
+         class="lesson__content">Содержание урока</div>
   </div> <!-- ./container -->
 </main>
 

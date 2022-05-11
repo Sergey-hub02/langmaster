@@ -7,16 +7,16 @@
 
   <title>Lang Master</title>
 
-  <link rel="stylesheet" href="../../resources/css/style.css">
-  <link rel="stylesheet" href="../../resources/css/blocks/container.css">
+  <link rel="stylesheet" href="/resources/css/style.css">
+  <link rel="stylesheet" href="/resources/css/blocks/container.css">
 
-  <link rel="stylesheet" href="../../resources/css/blocks/header.css">
-  <link rel="stylesheet" href="../../resources/css/blocks/logo.css">
+  <link rel="stylesheet" href="/resources/css/blocks/header.css">
+  <link rel="stylesheet" href="/resources/css/blocks/logo.css">
 
-  <link rel="stylesheet" href="../../resources/css/blocks/section.css">
-  <link rel="stylesheet" href="../../resources/css/blocks/courses.css">
+  <link rel="stylesheet" href="/resources/css/blocks/section.css">
+  <link rel="stylesheet" href="/resources/css/blocks/courses.css">
 
-  <link rel="stylesheet" href="../../resources/css/blocks/footer.css">
+  <link rel="stylesheet" href="/resources/css/blocks/footer.css">
 </head>
 
 
@@ -59,6 +59,23 @@
     </div> <!-- ./header__inner -->
   </div> <!-- ./container -->
 </header>
+
+
+<!--========== СЕКЦИЯ С ИНФОРМАЦИЕЙ О РЕСУРСЕ ==========-->
+<section class="section">
+  <div class="container">
+    <header class="section__header">
+      <h2 class="section__title">Информация о LangMaster</h2>
+    </header>
+
+    <div class="section__content">
+      <img class="section__image floating" src="/resources/images/local/alphabet.jpg" alt="Alphabet">
+      <p>Вследствие глобальных изменений в обществе, как в России, так во всем мире, изменилась и роль иностранного языка в системе образования, и из простого учебного предмета он превратился в базовый элемент современной системы образования, в средство достижения профессиональной реализации личности.</p>
+      <p>Ни для кого ни секрет, что в современном глобальном мире, знание иностранного языка очень весомый аргумент в успешной карьере человека. Кроме того, это значительно расширяет кругозор, ведь сейчас, в эпоху интернета, достать статью на иностранном языке не проблема.</p>
+      <p>Lang Master &mdash; это приложение, созданное, чтобы помочь пользователям изучить или хотя бы ознакомиться с основами того или иного иностранного языка. Разработчик этого ресурса надеется, что его творение будет хоть немного полезным.</p>
+    </div> <!-- ./section__content -->
+  </div> <!-- ./container -->
+</section>
 
 
 <!--========== СЕКЦИЯ "МОИ КУРСЫ" ==========-->
@@ -129,7 +146,7 @@
 </section>
 
 
-<!--========== СЕКЦИЯ "Созданные курсы" ==========-->
+<!--========== СЕКЦИЯ "СОЗДАННЫЕ КУРСЫ" ==========-->
 <section th:if="${userIsAdmin}" class="section">
   <div class="container">
     <header class="section__header">
@@ -137,7 +154,7 @@
     </header>
 
     <div class="section__content">
-      <div th:if="${createdCourses.size() != 0}" class="courses">
+      <div th:if="${createdCourses != null && createdCourses.size() != 0}" class="courses">
 
         <div th:each="course : ${createdCourses}" class="course">
           <a th:href="@{/langmaster/course/{id}(id=${course.getId()})}">

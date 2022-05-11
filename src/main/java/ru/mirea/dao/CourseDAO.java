@@ -15,6 +15,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс для работы с БД с таблицей курсов
+ */
 @Component
 public class CourseDAO {
   private static final String URL = "jdbc:mysql://localhost:3306/langmaster?useUnicode=true&characterEncoding=UTF-8";
@@ -268,5 +271,30 @@ public class CourseDAO {
     }
 
     return courseIsInList;
+  }
+
+  /**
+   * Возвращает true, если указанный пользователь является создателем указанного курса
+   * @param userId        id пользователя
+   * @param courseId      id курса
+   */
+  public boolean userIsCourseCreator(int userId, int courseId) {
+    boolean result = false;
+
+    try {
+      String query = "SELECT * FROM `Course` WHERE `course_id` = ? AND `user_id` = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setInt(1, courseId);
+      preparedStatement.setInt(2, userId);
+
+      ResultSet resultSet = preparedStatement.executeQuery();
+      result = resultSet.next();
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return result;
   }
 }
