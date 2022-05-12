@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Изменение урока</title>
+
+  <link rel="stylesheet" href="/resources/css/style.css">
+  <link rel="stylesheet" href="/resources/css/blocks/container.css">
+  <link rel="stylesheet" href="/resources/css/blocks/form.css">
+  <link rel="stylesheet" href="/resources/css/blocks/centeredContainer.css">
+</head>
+
+
+<body>
+
+<!--========== ФОРМА СОЗДАНИЯ УРОКА ==========-->
+<div class="centered_container">
+  <h1 class="form__title">Изменение урока</h1>
+
+  <form th:action="${'/langmaster/course/' + {courseId} + '/lesson/' + {lesson.getId()} + '/edit'}"
+        th:method="PATCH"
+        th:object="${lesson}"
+        class="form">
+
+    <div class="form__element">
+      <input type="text"
+             th:field="*{title}"
+             class="input"
+             placeholder="Название урока">
+
+      <p th:if="${#fields.hasErrors('title')}"
+         th:errors="*{title}"
+         class="error">Ошибка</p>
+    </div>
+
+    <div class="form__element">
+      <textarea th:field="*{content}"
+                class="textarea"
+                placeholder="Содержание урока"></textarea>
+
+      <p th:if="${#fields.hasErrors('content')}"
+         th:errors="*{content}"
+         class="error">Ошибка</p>
+    </div>
+
+    <div class="form__element centered">
+      <button class="button" type="submit">Изменить</button>
+    </div>
+
+  </form>
+</div> <!-- ./centered_container -->
+
+</body>
+
+</html>

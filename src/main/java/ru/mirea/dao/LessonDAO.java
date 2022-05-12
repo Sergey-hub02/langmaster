@@ -112,4 +112,41 @@ public class LessonDAO {
 
     return courseLessons;
   }
+
+  /**
+   * Обновляет содержимое урока
+   * @param lesson      обновляемый урок
+   */
+  public void updateLesson(Lesson lesson) {
+    try {
+      String query = "UPDATE `Lesson` SET `title` = ?, `content` = ? WHERE `lesson_id` = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setString(1, lesson.getTitle());
+      preparedStatement.setString(2, lesson.getContent());
+      preparedStatement.setInt(3, lesson.getId());
+
+      preparedStatement.executeUpdate();
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Удаляет урок из курса
+   * @param lessonId        id удаляемого урока
+   */
+  public void deleteLesson(int lessonId) {
+    try {
+      String query = "DELETE FROM `Lesson` WHERE `lesson_id` = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setInt(1, lessonId);
+      preparedStatement.executeUpdate();
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 }

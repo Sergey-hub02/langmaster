@@ -435,9 +435,65 @@ public class LangMasterController {
       return "redirect:/langmaster/login";
 
     model.addAttribute("courseId", courseId);
+    model.addAttribute("userIsCourseCreator",
+      this.courseDAO.userIsCourseCreator(this.user.getId(), courseId));
     model.addAttribute("lessonsList", this.lessonDAO.getCourseLessons(courseId));
     model.addAttribute("lesson", this.lessonDAO.getLesson(lessonId));
 
     return "pages/lessons";
+  }
+
+  /**
+   * Отображает страницу изменения урока
+   * @param courseId      id курса
+   * @param lessonId      id урока
+   * @param model         объект для передачи данных шаблонизатору
+   */
+  @GetMapping("/course/{courseId}/lesson/{lessonId}/edit")
+  public String displayUpdateLessonPage(@PathVariable("courseId") int courseId,
+                                        @PathVariable("lessonId") int lessonId,
+                                        Model model) {
+    // Запрос не должен пройти, если пользователь не авторизован
+    if (this.user == null)
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Невозможно найти ресурс!");
+
+    model.addAttribute("courseId", courseId);
+    model.addAttribute("lesson", this.lessonDAO.getLesson(lessonId));
+
+    return "pages/updateLesson";
+  }
+
+  /**
+   * Обновляет информацию об уроке курса
+   * @param courseId          id курса
+   * @param lessonId          id урока
+   * @param lesson            обновляемый урок
+   * @param bindingResult     объект, содержащий ошибки при заполнении полей формы
+   */
+  @PatchMapping("/course/{courseId}/lesson/{lessonId}/edit")
+  public String processUpdateLesson(@PathVariable("courseId") int courseId,
+                                    @PathVariable("lessonId") int lessonId,
+                                    @ModelAttribute("lesson") @Valid Lesson lesson,
+                                    BindingResult bindingResult) {
+    // Отображение ошибок при заполнении полей формы
+    if (bindingResult.hasErrors())
+      return "pages/updateLesson";
+
+    lesson.setId(lessonId);
+    this.lessonDAO.updateLesson(lesson);
+
+    return "redirect:/langmaster/course/{courseId}/lesson/{lessonId}";
+  }
+
+  /**
+   * Удаляет урок из указанного курса
+   * @param courseId      id курса
+   * @param lessonId      id урока
+   */
+  @DeleteMapping("/course/{courseId}/lesson/{lessonId}/delete")
+  public String processDeleteLesson(@PathVariable("courseId") int courseId,
+                                    @PathVariable("lessonId") int lessonId) {
+    this.lessonDAO.deleteLesson(lessonId);
+    return "redirect:/langmaster/course/{courseId}";
   }
 }

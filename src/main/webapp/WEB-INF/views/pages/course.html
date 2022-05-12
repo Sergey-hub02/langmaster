@@ -83,11 +83,20 @@
         <ul th:if="${courseLessons != null && courseLessons.size() != 0}" class="lessons_list">
 
           <a th:each="lesson : ${courseLessons}"
+             th:if="${user != null}"
              th:href="${'/langmaster/course/' + {course.getId()} + '/lesson/' + {lesson.getId()}}"
              class="lesson__link">
             <li class="lesson"
                 th:text="${lesson.getTitle()}">Название урока</li>
           </a>
+
+          <div th:each="lesson : ${courseLessons}"
+             th:unless="${user != null}"
+             th:href="${'/langmaster/course/' + {course.getId()} + '/lesson/' + {lesson.getId()}}"
+             class="lesson__link">
+            <li class="lesson"
+                th:text="${lesson.getTitle()}">Название урока</li>
+          </div>
 
         </ul>
 
