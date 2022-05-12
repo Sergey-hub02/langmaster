@@ -107,7 +107,19 @@
            style="margin-top: 25px">
         <a th:href="@{/langmaster/course/{id}/create(id=${course.getId()})}"
            class="assign__button">Добавить урок</a>
+
+        <a th:href="@{/langmaster/course/{id}/edit(id=${course.getId()})}"
+           class="assign__button">Изменить</a>
       </div>
+
+      <form th:action="@{/langmaster/course/{id}/delete(id=${course.getId()})}"
+            th:method="DELETE"
+            th:if="${userIsCourseCreator}"
+            style="margin-top: 20px"
+            onsubmit="return confirm('Вы уверены, что хотите удалить курс?')"
+            class="form">
+        <button class="assign__button" type="submit">Удалить</button>
+      </form>
     </div> <!-- ./section__content -->
   </div> <!-- ./container -->
 </section>

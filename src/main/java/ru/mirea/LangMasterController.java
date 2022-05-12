@@ -290,6 +290,44 @@ public class LangMasterController {
   }
 
   /**
+   * Отображает страницу изменения данных о курсе
+   * @param courseId      id курса
+   * @param model         объект для передачи данных шаблонизатору
+   */
+  @GetMapping("/course/{courseId}/edit")
+  public String displayUpdateCoursePage(@PathVariable("courseId") int courseId,
+                                        Model model) {
+    // Нельзя изменить курс, если пользователь не авторизован
+    // или пользователь не является создателем курса
+    if (this.user == null || !this.courseDAO.userIsCourseCreator(this.user.getId(), courseId))
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Невозможно найти ресурс!");
+
+    model.addAttribute("courseId", courseId);
+    model.addAttribute("course", this.courseDAO.getCourse(courseId));
+    return "pages/updateCourse";
+  }
+
+  /**
+   * Обновляет данные курса
+   * @param courseId          id курса
+   * @param course            объект курса
+   * @param bindingResult     объект, содержащий ошибки при заполнении полей формы
+   */
+  @PatchMapping("/course/{courseId}/edit")
+  public String processUpdateCourse(@PathVariable("courseId") int courseId,
+                                    @ModelAttribute("course") @Valid Course course,
+                                    BindingResult bindingResult) {
+    // Отображение ошибок при заполнении полей формы
+    if (bindingResult.hasErrors())
+      return "pages/updateCourse";
+
+    course.setId(courseId);
+    this.courseDAO.updateCourse(course);
+
+    return "redirect:/langmaster/course/{courseId}";
+  }
+
+  /**
    * Обрабатывает данные из формы и создаёт курс
    * @param course              объект курса
    * @param bindingResult       объект, содержащий ошибки при заполнении полей формы
@@ -319,6 +357,16 @@ public class LangMasterController {
     }
 
     this.courseDAO.createCourse(this.user.getId(), course);
+    return "redirect:/langmaster";
+  }
+
+  /**
+   * Удаляет курс из БД вместе с уроками этого курса
+   * @param courseId        id курса
+   */
+  @DeleteMapping("/course/{courseId}/delete")
+  public String processCourseDelete(@PathVariable("courseId") int courseId) {
+    this.courseDAO.deleteCourse(courseId);
     return "redirect:/langmaster";
   }
 

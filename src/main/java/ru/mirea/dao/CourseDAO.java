@@ -297,4 +297,56 @@ public class CourseDAO {
 
     return result;
   }
+
+  /**
+   * Изменяет курс
+   * @param course      обновляемый курс
+   */
+  public void updateCourse(Course course) {
+    try {
+      String query = "UPDATE `Course` SET `title` = ?, `description` = ? WHERE `course_id` = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setString(1, course.getTitle());
+      preparedStatement.setString(2, course.getDescription());
+      preparedStatement.setInt(3, course.getId());
+
+      preparedStatement.executeUpdate();
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Удаляет курс из его уроки из БД
+   * @param courseId      id удаляемого курса
+   */
+  public void deleteCourse(int courseId) {
+    try {
+      // Удаление из таблицы `Course`
+      String query = "DELETE FROM `Course` WHERE `course_id` = ?";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setInt(1, courseId);
+      preparedStatement.executeUpdate();
+
+      // Удаление из таблицы `Lesson`
+      query = "DELETE FROM `Lesson` WHERE `course_id` = ?";
+      preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setInt(1, courseId);
+      preparedStatement.executeUpdate();
+
+      // Удаление из таблицы `UserCourse`
+      query = "DELETE FROM `UserCourse` WHERE `course_id` = ?";
+      preparedStatement = conn.prepareStatement(query);
+
+      preparedStatement.setInt(1, courseId);
+      preparedStatement.executeUpdate();
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 }
